@@ -1,0 +1,38 @@
+{
+  "name": "simple-react-gallery",
+  "version": "1.0.0",
+  "description": "Simple React image gallery NPM pacakge",
+  "license": "MIT",
+  "author": "Lauris Kairo",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "rollup": "rollup -c --bundleConfigAsCjs"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "rollup": "^4.41.1",
+    "rollup-plugin-postcss": "^4.0.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
+    "@types/rollup-plugin-peer-deps-external": "^2.2.5",
+    "@vitejs/plugin-react": "^4.5.0",
+    "rollup-plugin-dts": "^6.2.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "tslib": "^2.8.1",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  }
+}
