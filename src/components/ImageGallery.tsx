@@ -4,7 +4,7 @@ import { ImageSlider } from './ImageSlider';
 
 export default function ImageGallery({
   images,
-  lazyLoading = false,
+  lazyLoading = true,
   keyboard = true,
   className,
 }: {
