@@ -47,4 +47,4 @@ function App() {
 
 ### License
 
-MIT © [Your Name](https://github.com/laurelis24)
+MIT © [laurelis24](https://github.com/laurelis24)
