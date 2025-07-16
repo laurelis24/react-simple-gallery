@@ -1,20 +1,35 @@
 {
   "name": "simple-react-gallery",
   "version": "1.0.0",
-  "description": "Simple React image gallery NPM pacakge",
+  "description": "Simple image gallery moving from thumbnail for React",
   "license": "MIT",
   "author": "Lauris Kairo",
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "keywords": [
+    "react",
+    "gallery",
+    "image",
+    "image-gallery",
+    "slider",
+    "carousel",
+    "simple"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "rollup": "rollup -c --bundleConfigAsCjs"
+    "rollup": "rollup -c --bundleConfigAsCjs",
+    "format": "prettier . --write",
+    "watch-css": "sass --watch style.scss:src/style.css"
   },
   "dependencies": {
+    "prettier": "^3.5.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rollup": "^4.41.1",
@@ -29,10 +44,20 @@
     "@types/react-dom": "^19.1.5",
     "@types/rollup-plugin-peer-deps-external": "^2.2.5",
     "@vitejs/plugin-react": "^4.5.0",
+    "prettier-plugin-css-order": "^2.1.2",
     "rollup-plugin-dts": "^6.2.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "tslib": "^2.8.1",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "singleQuote": true,
+    "semi": true,
+    "plugins": [
+      "prettier-plugin-css-order"
+    ],
+    "cssDeclarationSorterOrder": "concentric-css"
   }
 }
