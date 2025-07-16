@@ -20,7 +20,7 @@ npm install @laurelis/simple-react-gallery
 ## Usage
 
 ```tsx
-import ImageGallery from '@lauris/simple-react-gallery';
+import ImageGallery from '@laurelis/simple-react-gallery';
 
 const images = [
   { id: 1, src: '/images/photo1.jpg' },
