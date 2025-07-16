@@ -1,10 +1,15 @@
 # Simple React Gallery
 
+## 📸 Demo
+
+![Image Gallery Demo](./screenshots/gallery.gif)
+
 ## Features
 
 - Simple with no other dependencies
 - Slides from thumbnail
 - Keyboard navigation
+- Swipe support (in progress...)
 
 ## Installation
 
@@ -12,7 +17,9 @@
 npm install @lauris/simple-react-gallery
 ```
 
-<pre>```tsx
+## Usage
+
+```tsx
 import ImageGallery from '@lauris/simple-react-gallery';
 
 const images = [
@@ -24,7 +31,7 @@ const images = [
 function App() {
   return <ImageGallery images={images} lazyLoading={true} keyboard={true} />;
 }
- ``` </pre>
+```
 
 | Prop          | Type                             | Default | Description                                              |
 | ------------- | -------------------------------- | ------- | -------------------------------------------------------- |
@@ -32,3 +39,12 @@ function App() {
 | `lazyLoading` | `boolean`                        | `true`  | Enable lazy loading of whole gallery (HTML lazy loading) |
 | `keyboard`    | `boolean`                        | `true`  | Enable keyboard navigation                               |
 | `className`   | `string`                         | —       | Optional CSS class for custom styling                    |
+
+### Development & Contribution
+
+- Contributions and feedback are welcome! Feel free to join development!
+- Possible updates/bug fixes from time to time
+
+### License
+
+MIT © [Your Name](https://github.com/yourusername)
