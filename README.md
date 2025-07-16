@@ -14,7 +14,7 @@
 ## Installation
 
 ```bash
-npm install @lauris/simple-react-gallery
+npm install @laurelis/simple-react-gallery
 ```
 
 ## Usage
