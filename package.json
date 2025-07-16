@@ -60,5 +60,9 @@
       "prettier-plugin-css-order"
     ],
     "cssDeclarationSorterOrder": "concentric-css"
-  }
+  },
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/laurelis24/simple-react-gallery"
+}
 }

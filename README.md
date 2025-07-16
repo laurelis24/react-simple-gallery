@@ -2,7 +2,7 @@
 
 ## 📸 Demo
 
-![Image Gallery Demo](./screenshots/gallery.gif)
+![Image Gallery Demo](https://raw.githubusercontent.com/laurelis24/simple-react-gallery/refs/heads/main/screenshots/gallery.gif)
 
 ## Features
 
