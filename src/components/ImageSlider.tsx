@@ -13,6 +13,7 @@ interface ImageSliderProps {
 
 export function ImageSlider({ maxImages, galleryRef, imageIndex, keyboard, onClose }: ImageSliderProps) {
   const [currentIndex, setCurrentIndex] = useState<number>(imageIndex);
+  const currentIndexRef = useRef(currentIndex);
   const refCurrentImage = useRef<HTMLImageElement>(null);
   const [style, setStyle] = useState<any>({});
   useEffect(() => {
@@ -33,9 +34,6 @@ export function ImageSlider({ maxImages, galleryRef, imageIndex, keyboard, onClo
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
       window.removeEventListener('resize', handleResize);
-      if (interval) {
-        clearInterval(interval);
-      }
       if (removeClassTimeout) {
         clearTimeout(removeClassTimeout);
       }
@@ -43,10 +41,11 @@ export function ImageSlider({ maxImages, galleryRef, imageIndex, keyboard, onClo
   }, []);
 
   useEffect(() => {
-    setImageBoundingOrigin(currentIndex);
+    currentIndexRef.current = currentIndex;
+    setImageBoundingOrigin();
   }, [currentIndex]);
 
-  const setImageBoundingOrigin = (index: number, openModal: boolean = true) => {
+  const setImageBoundingOrigin = () => {
     const rect = getBoundingRect();
     if (!rect) return null;
     const { top, left, width, height } = rect;
@@ -88,47 +87,46 @@ export function ImageSlider({ maxImages, galleryRef, imageIndex, keyboard, onClo
     }, 300);
   };
   const handleResize = () => {
-    setImageBoundingOrigin(currentIndex);
+    setImageBoundingOrigin();
   };
 
   const handleClose = () => {
     const rect = getBoundingRect();
-    if (!rect) return;
-    const { top, left, width } = rect;
+    if (rect) {
+      const { top, left, width } = rect;
 
-    refCurrentImage.current?.classList.add('image-slide');
-    setStyle({
-      top,
-      left,
-      width,
-    });
+      refCurrentImage.current?.classList.add('image-slide');
+      setStyle({
+        top,
+        left,
+        width,
+      });
 
-    setTimeout(() => {
+      setTimeout(() => {
+        onClose();
+      }, 300);
+    } else {
       onClose();
-    }, 300);
+    }
   };
-
   const getBoundingRect = () => {
-    return galleryRef?.current?.children[currentIndex].getBoundingClientRect();
+    return galleryRef?.current?.children[currentIndexRef.current].getBoundingClientRect();
   };
 
   let pressed = false;
-  let interval: NodeJS.Timeout | null = null;
   const handleKeyDown = (e: KeyboardEvent) => {
     if (!pressed && e.key === 'ArrowLeft') {
       handleLeftBtnClick();
+      pressed = true;
     } else if (!pressed && e.key === 'ArrowRight') {
       handleRightBtnClick();
+      pressed = true;
     } else if (!pressed && e.key === 'Escape') {
       handleClose();
     }
   };
 
   const handleKeyUp = (e: KeyboardEvent) => {
-    if (interval) {
-      clearInterval(interval);
-      interval = null;
-    }
     pressed = false;
   };
 

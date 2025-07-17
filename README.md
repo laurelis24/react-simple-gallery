@@ -14,13 +14,13 @@
 ## Installation
 
 ```bash
-npm install @laurelis/simple-react-gallery
+npm install @laurelis/react-simple-gallery
 ```
 
 ## Usage
 
 ```tsx
-import ImageGallery from '@laurelis/simple-react-gallery';
+import ImageGallery from '@laurelis/react-simple-gallery';
 
 const images = [
   { id: 1, src: '/images/photo1.jpg' },

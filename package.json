@@ -27,7 +27,7 @@
     "preview": "vite preview",
     "rollup": "rollup -c --bundleConfigAsCjs",
     "format": "prettier . --write",
-    "watch-css": "sass --watch style.scss:src/style.css"
+    "watch-css": "sass --no-source-map --watch style.scss:src/style.css"
   },
   "dependencies": {
     "prettier": "^3.5.3",
