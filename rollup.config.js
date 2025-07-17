@@ -39,5 +39,4 @@ export default [
     plugins: [dts.default()],
     external: [/\.css$/],
   },
-  
 ];

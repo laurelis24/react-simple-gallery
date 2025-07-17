@@ -1,4 +1,4 @@
-# Simple React Gallery
+# React Simple Gallery
 
 ## 📸 Demo
 

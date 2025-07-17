@@ -64,6 +64,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/laurelis24/simple-react-gallery"
+    "url": "https://github.com/laurelis24/react-simple-gallery"
+  },
+  "bugs": {
+    "url": "https://github.com/laurelis24/react-simple-gallery/issues"
   }
 }
