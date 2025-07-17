@@ -85,6 +85,9 @@
 .fullscreen-wrapper .right-btn.clicked {
   animation: slideRight 0.2s linear 0s forwards;
 }
+.fullscreen-wrapper .hide-btn {
+  display: none;
+}
 .fullscreen-wrapper .exit-btn {
   display: flex;
   position: absolute;
@@ -119,6 +122,10 @@
   border-radius: 6px;
   width: 100%;
   object-fit: cover;
+  touch-action: none;
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 .fullscreen-wrapper .image-slide {
   transform-origin: center center;

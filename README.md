@@ -6,10 +6,10 @@
 
 ## Features
 
-- Simple with no other dependencies
+- Simple using minimal amount of dependencies
 - Slides from thumbnail
 - Keyboard navigation
-- Swipe support (in progress...)
+- Swipe support
 
 ## Installation
 
@@ -33,17 +33,23 @@ function App() {
 }
 ```
 
-| Prop          | Type                             | Default | Description                                              |
-| ------------- | -------------------------------- | ------- | -------------------------------------------------------- |
-| `images`      | `{ id: number; src: string; }[]` | —       | Array of images to display                               |
-| `lazyLoading` | `boolean`                        | `true`  | Enable lazy loading of whole gallery (HTML lazy loading) |
-| `keyboard`    | `boolean`                        | `true`  | Enable keyboard navigation                               |
-| `className`   | `string`                         | —       | Optional CSS class for custom styling                    |
+| Prop           | Type                             | Default | Description                                              |
+| -------------- | -------------------------------- | ------- | -------------------------------------------------------- |
+| `images`       | `{ id: number; src: string; }[]` | —       | Array of images to display                               |
+| `lazyLoading`  | `boolean`                        | `true`  | Enable lazy loading of whole gallery (HTML lazy loading) |
+| `keyboard`     | `boolean`                        | `true`  | Enable keyboard navigation                               |
+| `arrowButtons` | `boolean`                        | `true`  | Enable show or hide arrow key buttons                    |
+| `swipable`     | `boolean`                        | `true`  | Enable swipe on/off (mobile and pc)                      |
+| `className`    | `string`                         | —       | Optional CSS class for custom styling                    |
 
 ### Development & Contribution
 
 - Contributions and feedback are welcome! Feel free to join development!
 - Possible updates/bug fixes from time to time
+
+### Used dependencies
+
+- react-swipeable
 
 ### License
 

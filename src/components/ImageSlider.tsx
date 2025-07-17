@@ -2,16 +2,28 @@ import { useRef, useState, useEffect, RefObject } from 'react';
 import ChangeImageButton from './buttons/ChangeImageButton';
 import ExitButton from './buttons/ExitButton';
 import ImageCounter from './imageCounter/ImageCounter';
+import { useSwipeable } from 'react-swipeable';
 
 interface ImageSliderProps {
   maxImages: number;
   galleryRef: RefObject<HTMLDivElement | null>;
   imageIndex: number;
   keyboard: boolean;
+  arrowButtons: boolean;
+  swipable: boolean;
+
   onClose: () => void;
 }
 
-export function ImageSlider({ maxImages, galleryRef, imageIndex, keyboard, onClose }: ImageSliderProps) {
+export function ImageSlider({
+  maxImages,
+  galleryRef,
+  imageIndex,
+  keyboard,
+  arrowButtons,
+  swipable,
+  onClose,
+}: ImageSliderProps) {
   const [currentIndex, setCurrentIndex] = useState<number>(imageIndex);
   const currentIndexRef = useRef(currentIndex);
   const refCurrentImage = useRef<HTMLImageElement>(null);
@@ -134,22 +146,29 @@ export function ImageSlider({ maxImages, galleryRef, imageIndex, keyboard, onClo
     return (galleryRef?.current?.children[currentIndex] as HTMLImageElement).src;
   };
 
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => handleLeftBtnClick(),
+    onSwipedRight: () => handleRightBtnClick(),
+    trackMouse: true,
+  });
+
   return (
-    <div onClick={handleClose} className="fullscreen-wrapper">
+    <div {...(swipable ? swipeHandlers : {})} className="fullscreen-wrapper">
       <ImageCounter imageIdx={currentIndex} maxImageCount={maxImages} />
-      <ChangeImageButton handleButtonClick={handleLeftBtnClick} direction="left" />
+      <ChangeImageButton showButton={arrowButtons} handleButtonClick={handleLeftBtnClick} direction="left" />
 
       <img
-        onClick={(e) => e.stopPropagation()}
         ref={refCurrentImage}
         className="show-image image-slide"
         style={style}
         src={getImageSrc()}
         alt=""
+        draggable={false}
       />
-      <ChangeImageButton handleButtonClick={handleRightBtnClick} direction="right" />
 
-      <ExitButton />
+      <ChangeImageButton showButton={arrowButtons} handleButtonClick={handleRightBtnClick} direction="right" />
+
+      <ExitButton handleClose={handleClose} />
     </div>
   );
 }

@@ -92,6 +92,10 @@
     animation: slideRight 0.2s linear 0s forwards;
   }
 
+  .hide-btn {
+    display: none;
+  }
+
   .exit-btn {
     display: flex;
     position: absolute;
@@ -131,6 +135,10 @@
     border-radius: 6px;
     width: 100%;
     object-fit: cover;
+    touch-action: none;
+    pointer-events: auto;
+    user-select: none;
+    -webkit-user-drag: none;
   }
 
   .image-slide {

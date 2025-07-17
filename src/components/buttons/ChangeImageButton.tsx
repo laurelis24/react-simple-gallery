@@ -3,10 +3,11 @@ import '../../style.css';
 
 interface ButtonProps {
   handleButtonClick: () => void;
+  showButton: boolean;
   direction: 'left' | 'right';
 }
 
-export default function ChangeImageButton({ handleButtonClick, direction }: ButtonProps) {
+export default function ChangeImageButton({ handleButtonClick, direction, showButton }: ButtonProps) {
   const ref = useRef<HTMLButtonElement | null>(null);
   let clicked = useRef(false);
   return (
@@ -25,7 +26,7 @@ export default function ChangeImageButton({ handleButtonClick, direction }: Butt
           }, 400);
         }
       }}
-      className={direction === 'left' ? 'left-btn' : 'right-btn'}
+      className={`${direction === 'left' ? 'left-btn' : 'right-btn'} ${!showButton ? 'hide-btn' : ''}`}
       ref={ref}
     >
       {direction === 'left' ? (

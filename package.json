@@ -1,6 +1,6 @@
 {
   "name": "@laurelis/react-simple-gallery",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Simple image gallery moving from thumbnail for React",
   "license": "MIT",
   "author": "Lauris Kairo",
@@ -19,7 +19,8 @@
     "slider",
     "carousel",
     "simple",
-    "keyboard"
+    "keyboard",
+    "swipe"
   ],
   "scripts": {
     "dev": "vite",
@@ -29,13 +30,7 @@
     "format": "prettier . --write",
     "watch-css": "sass --no-source-map --watch style.scss:src/style.css"
   },
-  "dependencies": {
-    "prettier": "^3.5.3",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "rollup": "^4.41.1",
-    "rollup-plugin-postcss": "^4.0.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-node-resolve": "^16.0.1",
@@ -46,11 +41,17 @@
     "@types/rollup-plugin-peer-deps-external": "^2.2.5",
     "@vitejs/plugin-react": "^4.5.0",
     "prettier-plugin-css-order": "^2.1.2",
+    "react-swipeable": "^7.0.2",
     "rollup-plugin-dts": "^6.2.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "tslib": "^2.8.1",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "prettier": "^3.5.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "rollup": "^4.41.1",
+    "rollup-plugin-postcss": "^4.0.2"
   },
   "prettier": {
     "printWidth": 120,

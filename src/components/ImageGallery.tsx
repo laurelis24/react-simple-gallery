@@ -6,11 +6,15 @@ export default function ImageGallery({
   images,
   lazyLoading = true,
   keyboard = true,
+  arrowKeys = true,
+  swipable = true,
   className,
 }: {
   images: { id: number; src: string }[];
   lazyLoading?: boolean;
   keyboard?: boolean;
+  arrowKeys?: boolean;
+  swipable?: boolean;
   className?: string;
 }) {
   const [imageIndex, setImageIndex] = useState<number | null>(null);
@@ -43,6 +47,8 @@ export default function ImageGallery({
           galleryRef={galleryRef}
           imageIndex={imageIndex}
           keyboard={keyboard}
+          arrowButtons={arrowKeys}
+          swipable={swipable}
           onClose={closeModal}
         />
       )}

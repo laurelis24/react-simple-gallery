@@ -54,7 +54,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 function Test() {
   return (
     <main>
-      <ImageGallery images={images} lazyLoading={true} keyboard={true} />
+      <ImageGallery images={images} lazyLoading={true} keyboard={true} arrowKeys={true} />
     </main>
   );
 }
