@@ -11,6 +11,7 @@ const packageJson = require('./package.json');
 export default [
   {
     input: 'src/index.ts',
+    external: ['react', 'react-dom'],
     output: [
       {
         file: packageJson.main,
@@ -31,7 +32,6 @@ export default [
       terser(),
       postcss(),
     ],
-    external: ['react', 'react-dom'],
   },
   {
     input: 'src/index.ts',
@@ -39,4 +39,5 @@ export default [
     plugins: [dts.default()],
     external: [/\.css$/],
   },
+  
 ];
