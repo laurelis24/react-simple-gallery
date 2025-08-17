@@ -32,11 +32,11 @@ export default function ImageGallery({
   };
   return (
     <>
-      <div ref={galleryRef} className={`gallery ${className}`}>
+      <div ref={galleryRef} className={`gallery ${className}`.trim()}>
         {Children.map(children, (child, index) =>
           isValidElement<ImageProps>(child)
             ? cloneElement(child, {
-                className: 'item',
+                className: `item ${child.props?.className}`.trim(),
                 loading: lazyLoading ? 'lazy' : 'eager',
                 onClick: () => openModal(index),
               })

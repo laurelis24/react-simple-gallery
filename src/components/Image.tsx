@@ -5,6 +5,6 @@ export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   alt?: string;
 }
 
-export default function Image({ src, alt = '', ...rest }: ImageProps) {
+export default function Image({ src, alt, ...rest }: ImageProps) {
   return <img src={src} alt={alt} {...rest} />;
 }
