@@ -1,22 +1,25 @@
-import { useRef, useState } from 'react';
+import { Children, cloneElement, isValidElement, ReactElement, useRef, useState } from 'react';
 import '../style.css';
 import { ImageSlider } from './ImageSlider';
+import { ImageProps } from './Image';
 
-export default function ImageGallery({
-  images,
-  lazyLoading = true,
-  keyboard = true,
-  arrowKeys = true,
-  swipable = true,
-  className,
-}: {
-  images: { id: number; src: string }[];
+interface ImageGalleryProps {
+  children: ReactElement<ImageProps>[];
   lazyLoading?: boolean;
   keyboard?: boolean;
   arrowKeys?: boolean;
   swipable?: boolean;
   className?: string;
-}) {
+}
+
+export default function ImageGallery({
+  children,
+  lazyLoading = true,
+  keyboard = true,
+  arrowKeys = true,
+  swipable = true,
+  className = '',
+}: ImageGalleryProps) {
   const [imageIndex, setImageIndex] = useState<number | null>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
 
@@ -30,20 +33,20 @@ export default function ImageGallery({
   return (
     <>
       <div ref={galleryRef} className={`gallery ${className}`}>
-        {images.map((image, idx) => (
-          <img
-            key={image?.id || idx}
-            loading={lazyLoading ? 'lazy' : 'eager'}
-            className="item"
-            onClick={() => openModal(idx)}
-            src={image.src}
-          ></img>
-        ))}
+        {Children.map(children, (child, index) =>
+          isValidElement<ImageProps>(child)
+            ? cloneElement(child, {
+                className: 'item',
+                loading: lazyLoading ? 'lazy' : 'eager',
+                onClick: () => openModal(index),
+              })
+            : child,
+        )}
       </div>
 
       {imageIndex !== null && (
         <ImageSlider
-          maxImages={images.length}
+          maxImages={Children.count(children)}
           galleryRef={galleryRef}
           imageIndex={imageIndex}
           keyboard={keyboard}
