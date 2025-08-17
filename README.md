@@ -31,7 +31,7 @@ const images = [
 
 function App() {
   return (
-    <ImageGaller lazyLoading={true} keyboard={true} className={"your-class"} />
+    <ImageGallery>
       {images.map((image) => (
         // Now you can add own style to images
         <Image key={image.id} src={image.src} className={"your-class"}/>
