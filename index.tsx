@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom/client';
 import ImageGallery from './src/components/ImageGallery';
-import React from 'react';
 
 const images = [
   {
@@ -46,9 +45,9 @@ const images = [
 ];
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <Test />,
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Test />,
+  // </React.StrictMode>,
 );
 
 function Test() {

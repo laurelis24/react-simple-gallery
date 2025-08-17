@@ -96,36 +96,56 @@
     display: none;
   }
 
-  .exit-btn {
+  .nav-container {
     display: flex;
     position: absolute;
-    top: 10px;
-    right: 10px;
-    justify-content: center;
+    top: 0;
+    left: 0;
+    justify-content: space-between;
     align-items: center;
-    cursor: pointer;
-    margin: auto;
-    border: none;
-    border-radius: 50%;
-    background-color: transparent;
-    width: 35px;
-    height: 35px;
-    color: white;
+    margin: 0;
+    padding: 0 0 0 10px;
+    width: 100%;
 
-    svg {
-      width: 100%;
-      height: 100%;
-      stroke-width: 1;
-      transition: stroke-width 0.2s;
+    .left-container {
+      .image-counter {
+        opacity: 0.5;
+        color: white;
+      }
     }
 
-    &:hover {
-      svg {
-        stroke-width: 2;
+    .right-container {
+      .exit-btn,
+      .fullscreen-btn {
+        opacity: 0.6;
+        cursor: pointer;
+        border: none;
+        border-radius: 50%;
+        background-color: transparent;
+        width: 35px;
+        height: 35px;
+        color: white;
+
+        svg {
+          width: 100%;
+          height: 100%;
+          stroke-width: 1;
+          transition: stroke-width 0.2s;
+        }
+
+        &:hover {
+          opacity: 0.8;
+          svg {
+            stroke-width: 2;
+          }
+        }
+      }
+      .exit-btn {
+        width: 40px;
+        height: 40px;
       }
     }
   }
-
   .show-image,
   .image-slide {
     position: absolute;
@@ -148,14 +168,6 @@
 
   .show-image.fade-out {
     animation: fade 0.3s linear 0s forwards;
-  }
-
-  .image-counter {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    opacity: 0.5;
-    color: white;
   }
 }
 

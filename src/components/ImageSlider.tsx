@@ -3,6 +3,7 @@ import ChangeImageButton from './buttons/ChangeImageButton';
 import ExitButton from './buttons/ExitButton';
 import ImageCounter from './imageCounter/ImageCounter';
 import { useSwipeable } from 'react-swipeable';
+import FullScreenButton from './buttons/FullScreenButton';
 
 interface ImageSliderProps {
   maxImages: number;
@@ -11,7 +12,6 @@ interface ImageSliderProps {
   keyboard: boolean;
   arrowButtons: boolean;
   swipable: boolean;
-
   onClose: () => void;
 }
 
@@ -27,6 +27,7 @@ export function ImageSlider({
   const [currentIndex, setCurrentIndex] = useState<number>(imageIndex);
   const currentIndexRef = useRef(currentIndex);
   const refCurrentImage = useRef<HTMLImageElement>(null);
+  const refSlider = useRef<HTMLDivElement>(null);
   const [style, setStyle] = useState<any>({});
   useEffect(() => {
     if (keyboard) {
@@ -70,7 +71,7 @@ export function ImageSlider({
     const deltaX = viewportCenterX - originCenterX;
     const deltaY = viewportCenterY - originCenterY;
 
-    const scale = Math.min((0.9 * window.innerWidth) / width, (0.9 * window.innerHeight) / height);
+    const scale = Math.min((0.9 * window.innerWidth) / width, (0.8 * window.innerHeight) / height);
 
     setStyle({
       top,
@@ -150,11 +151,29 @@ export function ImageSlider({
     onSwipedLeft: () => handleLeftBtnClick(),
     onSwipedRight: () => handleRightBtnClick(),
     trackMouse: true,
+    trackTouch: true,
   });
 
   return (
-    <div {...(swipable ? swipeHandlers : {})} className="fullscreen-wrapper">
-      <ImageCounter imageIdx={currentIndex} maxImageCount={maxImages} />
+    <div
+      {...(swipable ? swipeHandlers : {})}
+      ref={(el) => {
+        refSlider.current = el;
+        swipeHandlers.ref(el);
+      }}
+      className="fullscreen-wrapper"
+    >
+      <div className="nav-container">
+        <div className="left-container">
+          <ImageCounter imageIdx={currentIndex} maxImageCount={maxImages} />
+        </div>
+
+        <div className="right-container">
+          <FullScreenButton refSlider={refSlider} />
+          <ExitButton handleClose={handleClose} />
+        </div>
+      </div>
+
       <ChangeImageButton showButton={arrowButtons} handleButtonClick={handleLeftBtnClick} direction="left" />
 
       <img
@@ -168,7 +187,7 @@ export function ImageSlider({
 
       <ChangeImageButton showButton={arrowButtons} handleButtonClick={handleRightBtnClick} direction="right" />
 
-      <ExitButton handleClose={handleClose} />
+      {/* <ExitButton handleClose={handleClose} /> */}
     </div>
   );
 }
