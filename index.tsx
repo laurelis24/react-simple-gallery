@@ -1,5 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import ImageGallery from './src/components/ImageGallery';
+import Image from './src/components/Image';
+import React from 'react';
 
 const images = [
   {
@@ -45,15 +47,17 @@ const images = [
 ];
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  // <React.StrictMode>
-  <Test />,
-  // </React.StrictMode>,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
 );
 
-function Test() {
+function App() {
   return (
-    <main>
-      <ImageGallery images={images} lazyLoading={true} keyboard={true} arrowKeys={true} />
-    </main>
+    <ImageGallery>
+      {images.map((image) => (
+        <Image key={image.id} src={image.src} />
+      ))}
+    </ImageGallery>
   );
 }
