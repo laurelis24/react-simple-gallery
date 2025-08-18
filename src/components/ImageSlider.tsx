@@ -24,10 +24,11 @@ export function ImageSlider({
   swipable = true,
   onClose,
 }: ImageSliderProps) {
+  console.log(galleryRef?.current?.children);
   // ---------- State & Refs ----------
   const [currentIndex, setCurrentIndex] = useState(imageIndex);
   const currentIndexRef = useRef(currentIndex);
-  const refCurrentImage = useRef<HTMLImageElement>(null);
+  const refCurrentImage = useRef<HTMLDivElement>(null);
   const refSlider = useRef<HTMLDivElement>(null);
   const [style, setStyle] = useState<CSSProperties>({});
 
@@ -47,14 +48,14 @@ export function ImageSlider({
 
     const { top, left, width, height } = rect;
     const viewportCenterX = window.innerWidth / 2;
-    const viewportCenterY = window.innerHeight / 2;
+    const viewportCenterY = window.innerHeight / 2 - 50;
     const originCenterX = left + width / 2;
     const originCenterY = top + height / 2;
 
     const deltaX = viewportCenterX - originCenterX;
     const deltaY = viewportCenterY - originCenterY;
 
-    const scale = Math.min((0.9 * window.innerWidth) / width, (0.8 * window.innerHeight) / height);
+    const scale = Math.min((0.8 * window.innerWidth) / width, (0.75 * window.innerHeight) / height);
 
     setStyle({
       top,
@@ -162,6 +163,12 @@ export function ImageSlider({
     trackMouse: true,
     trackTouch: true,
   });
+  const swipeHandlers2 = useSwipeable({
+    onSwiped: (eventData) => {
+      eventData.event.stopPropagation();
+      console.log('SWIPEEED');
+    },
+  });
 
   // ---------- Render ----------
   return (
@@ -182,17 +189,38 @@ export function ImageSlider({
           <ExitButton handleClose={handleClose} />
         </div>
       </div>
+      <div className="background-test" style={{ backgroundImage: `url(${getCurrentImageSrc()})` }}></div>
 
       <ChangeImageButton showButton={arrowButtons} handleButtonClick={handleLeft} direction="left" />
-      <img
-        ref={refCurrentImage}
-        className="show-image image-slide"
-        style={style}
-        src={getCurrentImageSrc()}
-        alt=""
-        draggable={false}
-      />
+      <div ref={refCurrentImage} className="image-container image-slide" style={style}>
+        <img
+          // ref={refCurrentImage}
+          // className="show-image image-slide"
+          // style={style}
+          src={getCurrentImageSrc()}
+          draggable={false}
+        />
+      </div>
+
       <ChangeImageButton showButton={arrowButtons} handleButtonClick={handleRight} direction="right" />
+
+      {galleryRef.current?.children && (
+        <div className="bottom-container">
+          {Array.from(galleryRef.current.children).map((child, index) => {
+            const img = child as HTMLImageElement; // type assertion
+            return (
+              <img
+                onClick={() => {
+                  fadeImage();
+                  setCurrentIndex(index);
+                }}
+                src={img.src}
+                className={currentIndex === index ? 'active' : ''}
+              />
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

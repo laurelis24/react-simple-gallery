@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-import '../../style.css';
 
 interface ButtonProps {
   handleButtonClick: () => void;
