@@ -25,13 +25,16 @@ export default function AnimatedImageClone({
   });
 
   useLayoutEffect(() => {
-    setStyle({
-      top: endRect.top + window.scrollY,
-      left: endRect.left + window.scrollX,
-      width: endRect.width,
-      height: endRect.height,
-      opacity: 0.3,
+    const id = requestAnimationFrame(() => {
+      setStyle({
+        top: endRect.top + window.scrollY,
+        left: endRect.left + window.scrollX,
+        width: endRect.width,
+        height: endRect.height,
+        opacity: 0.3,
+      });
     });
+    return () => cancelAnimationFrame(id);
   }, []);
 
   return (
