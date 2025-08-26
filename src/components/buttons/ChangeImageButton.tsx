@@ -1,41 +1,40 @@
-import { useRef } from 'react';
-import '../../style.css';
-
+import { Direction } from '../../types/types';
+import styles from '../../style.module.css';
 interface ButtonProps {
   handleButtonClick: () => void;
-  showButton: boolean;
-  direction: 'left' | 'right';
+  direction: Direction;
 }
 
-export default function ChangeImageButton({ handleButtonClick, direction, showButton }: ButtonProps) {
-  const ref = useRef<HTMLButtonElement | null>(null);
-  let clicked = useRef(false);
+export default function ChangeImageButton({ handleButtonClick, direction }: ButtonProps) {
   return (
     <button
       onClick={(e) => {
         e.stopPropagation();
-
-        if (ref.current && !clicked.current) {
-          clicked.current = true;
-          handleButtonClick();
-          ref.current.classList.add('clicked');
-
-          setTimeout(() => {
-            ref.current?.classList.remove('clicked');
-            clicked.current = false;
-          }, 400);
-        }
+        handleButtonClick();
       }}
-      className={`${direction === 'left' ? 'left-btn' : 'right-btn'} ${!showButton ? 'hide-btn' : ''}`}
-      ref={ref}
+      className={`${direction === 'left' ? styles['left-btn'] : styles['right-btn']}`}
     >
       {direction === 'left' ? (
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="size-6"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
         </svg>
       ) : (
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="size-6"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
         </svg>
       )}
     </button>

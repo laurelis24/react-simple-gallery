@@ -1,40 +1,50 @@
-import { RefObject } from 'react';
+import { RefObject, useEffect, useState } from 'react';
+import styles from '../../style.module.css';
 
 interface FullScreenButtonProps {
   refSlider: RefObject<HTMLDivElement | null>;
 }
 
 export default function FullScreenButton({ refSlider }: FullScreenButtonProps) {
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    const onChange = () => {
+      setIsFullscreen(document.fullscreenElement === refSlider.current);
+    };
+
+    document.addEventListener('fullscreenchange', onChange);
+    return () => document.removeEventListener('fullscreenchange', onChange);
+  }, []);
+
   const handleFullScreen = () => {
-    if (document.fullscreenEnabled && !document.fullscreenElement) {
+    if (!document.fullscreenElement) {
       refSlider.current?.requestFullscreen();
     } else {
       document.exitFullscreen();
     }
   };
+
   return (
-    <button onClick={handleFullScreen} className="fullscreen-btn">
-      {document.fullscreenElement !== refSlider.current ? (
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+    <button onClick={handleFullScreen} className={styles['fullscreen-btn']}>
+      {!isFullscreen ? (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <path
+            stroke="currentColor"
             strokeLinecap="round"
             strokeLinejoin="round"
-            d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
+            strokeWidth={1.5}
+            d="M8 4H4m0 0v4m0-4 5 5m7-5h4m0 0v4m0-4-5 5M8 20H4m0 0v-4m0 4 5-5m7 5h4m0 0v-4m0 4-5-5"
           />
         </svg>
       ) : (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-6"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <path
+            stroke="currentColor"
             strokeLinecap="round"
             strokeLinejoin="round"
-            d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25"
+            strokeWidth={1.5}
+            d="M4 8h4V4m12 4h-4V4M4 16h4v4m12-4h-4v4"
           />
         </svg>
       )}

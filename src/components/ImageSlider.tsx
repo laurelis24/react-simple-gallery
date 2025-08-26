@@ -1,119 +1,117 @@
-import { useRef, useState, useEffect, useCallback, RefObject, CSSProperties } from 'react';
-import { useSwipeable } from 'react-swipeable';
+import { useRef, useEffect, useReducer, RefObject, ReactElement, Children } from 'react';
+import { SwipeEventData, useSwipeable } from 'react-swipeable';
 import ChangeImageButton from './buttons/ChangeImageButton';
 import ExitButton from './buttons/ExitButton';
-import ImageCounter from './imageCounter/ImageCounter';
+import ImageCounter from './ImageCounter';
 import FullScreenButton from './buttons/FullScreenButton';
+import { ImageProps } from './Image';
+import reducer from '../functions/reducer';
+import { Direction } from '../types/types';
+import SliderImageContainer from './SliderImageContainer';
+
+import styles from '../style.module.css';
 
 interface ImageSliderProps {
-  maxImages: number;
-  galleryRef: RefObject<HTMLDivElement | null>;
+  imageCount: number;
+  children: ReactElement<ImageProps>[];
+  refSlide: RefObject<HTMLDivElement | null>;
   imageIndex: number;
   keyboard?: boolean;
   arrowButtons?: boolean;
   swipable?: boolean;
-  onClose: () => void;
+  onClose: (idx: number) => void;
 }
 
 export function ImageSlider({
-  maxImages,
-  galleryRef,
+  imageCount,
+  children,
   imageIndex,
+  refSlide,
   keyboard = true,
   arrowButtons = true,
   swipable = true,
   onClose,
 }: ImageSliderProps) {
-  // ---------- State & Refs ----------
-  const [currentIndex, setCurrentIndex] = useState(imageIndex);
-  const currentIndexRef = useRef(currentIndex);
-  const refCurrentImage = useRef<HTMLImageElement>(null);
+  const options = { swipeThreshold: 70 };
   const refSlider = useRef<HTMLDivElement>(null);
-  const [style, setStyle] = useState<CSSProperties>({});
+  const [state, dispatch] = useReducer(reducer, { pos: imageIndex + 1, direction: 'right', imageCount });
+  const canSwipeRef = useRef<{ canSwipe: boolean; direction: Direction }>({ canSwipe: true, direction: 'left' });
 
-  // ---------- Utils ----------
-  const getBoundingRect = useCallback(() => {
-    return galleryRef.current?.children[currentIndexRef.current]?.getBoundingClientRect();
-  }, [galleryRef]);
+  const slide = (dir: Direction, data: SwipeEventData) => {
+    if (!refSlide.current || !canSwipeRef.current.canSwipe) return;
+    refSlide.current?.classList.add(styles['slider-transition']);
 
-  const getCurrentImageSrc = useCallback(() => {
-    return (galleryRef.current?.children[currentIndexRef.current] as HTMLImageElement)?.src || '';
-  }, [galleryRef]);
+    const base = state.pos * 100;
 
-  // ---------- Image Animation ----------
-  const updateImageStyle = useCallback(() => {
-    const rect = getBoundingRect();
-    if (!rect) return;
-
-    const { top, left, width, height } = rect;
-    const viewportCenterX = window.innerWidth / 2;
-    const viewportCenterY = window.innerHeight / 2;
-    const originCenterX = left + width / 2;
-    const originCenterY = top + height / 2;
-
-    const deltaX = viewportCenterX - originCenterX;
-    const deltaY = viewportCenterY - originCenterY;
-
-    const scale = Math.min((0.9 * window.innerWidth) / width, (0.8 * window.innerHeight) / height);
-
-    setStyle({
-      top,
-      left,
-      width,
-      transform: `translate(${deltaX}px, ${deltaY}px) scale(${scale})`,
-      position: 'fixed',
-    });
-  }, [getBoundingRect]);
-
-  const fadeImage = useCallback(() => {
-    if (!refCurrentImage.current) return;
-    const img = refCurrentImage.current;
-    img.classList.add('fade-out');
-    setTimeout(() => img.classList.remove('fade-out'), 300);
-  }, []);
-
-  // ---------- Navigation ----------
-  const handleLeft = useCallback(() => {
-    fadeImage();
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : maxImages - 1));
-  }, [fadeImage, maxImages]);
-
-  const handleRight = useCallback(() => {
-    fadeImage();
-    setCurrentIndex((prev) => (prev < maxImages - 1 ? prev + 1 : 0));
-  }, [fadeImage, maxImages]);
-
-  const handleClose = useCallback(() => {
-    const rect = getBoundingRect();
-    if (rect) {
-      const { top, left, width } = rect;
-      refCurrentImage.current?.classList.add('image-slide');
-      setStyle({ top, left, width, position: 'fixed' });
-      setTimeout(onClose, 300);
-    } else {
-      onClose();
+    if (
+      (dir === 'left' && data.deltaX > -options.swipeThreshold) ||
+      (dir === 'right' && data.deltaX < options.swipeThreshold)
+    ) {
+      refSlide.current?.classList.remove(styles['slider-transition']);
+      refSlide.current.style.transform = `translateX(calc(${-base}%)`;
+      return;
     }
-  }, [getBoundingRect, onClose]);
 
-  // ---------- Keyboard ----------
+    refSlide.current.style.transform = `translateX(calc(${-(base + (dir === 'left' ? 100 : -100))}%)`;
+
+    canSwipeRef.current.canSwipe = false;
+    canSwipeRef.current.direction = dir;
+  };
+
+  const slideAnimation = (data: SwipeEventData) => {
+    if (!refSlide.current || !canSwipeRef.current.canSwipe) return;
+    if (refSlide.current) {
+      const base = state.pos * 100;
+      refSlide.current.style.transform = `translate(calc(${-base}% + ${data.deltaX}px))`;
+    }
+  };
+
+  useEffect(() => {
+    function removeTransition() {
+      if (!refSlide.current || canSwipeRef.current.canSwipe) return;
+      refSlide.current?.classList.remove(styles['slider-transition']);
+      dispatch({ direction: canSwipeRef.current.direction });
+      canSwipeRef.current.canSwipe = true;
+    }
+
+    refSlide.current?.addEventListener('transitionend', removeTransition);
+
+    return () => {
+      if (!refSlide.current) return;
+      refSlide.current.removeEventListener('transitionend', removeTransition);
+    };
+  }, [state.pos]);
+
+  const handleClick = (direction: Direction) => {
+    if (!refSlide.current || !canSwipeRef.current) return;
+    dispatch({ direction: direction });
+  };
+
+  const handleClose = () => {
+    onClose(state.pos - 1);
+  };
+  const handleCloseRef = useRef(handleClose);
+  useEffect(() => {
+    handleCloseRef.current = handleClose;
+  }, [handleClose]);
+
   useEffect(() => {
     if (!keyboard) return;
-
     let keyPressed = false;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (keyPressed) return;
       switch (e.key) {
         case 'ArrowLeft':
-          handleLeft();
+          handleClick('right');
           keyPressed = true;
           break;
         case 'ArrowRight':
-          handleRight();
+          handleClick('left');
           keyPressed = true;
           break;
         case 'Escape':
-          handleClose();
+          handleCloseRef.current();
           break;
       }
     };
@@ -129,70 +127,55 @@ export function ImageSlider({
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, [keyboard, handleLeft, handleRight, handleClose]);
+  }, []);
 
-  // ---------- Effects ----------
-  useEffect(() => {
-    currentIndexRef.current = currentIndex;
-    updateImageStyle();
-  }, [currentIndex, updateImageStyle]);
-
-  useEffect(() => {
-    window.addEventListener('resize', updateImageStyle);
-    const removeClass = () => {
-      refCurrentImage.current?.classList.remove('image-slide');
-    };
-
-    if (refCurrentImage?.current) {
-      refCurrentImage.current?.addEventListener('transitionend', removeClass);
-    }
-    //
-    return () => {
-      window.removeEventListener('resize', updateImageStyle);
-      if (refCurrentImage?.current) {
-        refCurrentImage.current?.removeEventListener('transitionend', removeClass);
-      }
-    };
-  }, [updateImageStyle]);
-
-  // ---------- Swipe ----------
-  const swipeHandlers = useSwipeable({
-    onSwipedLeft: handleRight,
-    onSwipedRight: handleLeft,
-    trackMouse: true,
+  const handleSwiper = useSwipeable({
+    onSwipedLeft: (data) => slide('left', data),
+    onSwipedRight: (data) => slide('right', data),
+    onSwipedUp: () => onClose(state.pos - 1),
+    onSwipedDown: () => onClose(state.pos - 1),
+    onSwiping: (data) => slideAnimation(data),
+    onSwipeStart: () => {
+      refSlide.current?.classList.remove(styles['slider-transition']);
+    },
     trackTouch: true,
+    trackMouse: true,
+    preventScrollOnSwipe: true,
   });
 
-  // ---------- Render ----------
   return (
-    <div
-      {...(swipable ? swipeHandlers : {})}
-      ref={(el) => {
-        refSlider.current = el;
-        if (swipable) swipeHandlers.ref(el);
-      }}
-      className="fullscreen-wrapper"
-    >
-      <div className="nav-container">
-        <div className="left-container">
-          <ImageCounter imageIdx={currentIndex} maxImageCount={maxImages} />
+    <div ref={refSlider} className={styles['fullscreen-wrapper']}>
+      <div className={styles['nav-container']}>
+        <div className={styles['left-container']}>
+          <ImageCounter imagePosition={state.pos} imageCount={imageCount} />
         </div>
-        <div className="right-container">
+        <div className={styles['right-container']}>
           <FullScreenButton refSlider={refSlider} />
-          <ExitButton handleClose={handleClose} />
+          <ExitButton handleClose={() => onClose(state.pos - 1)} />
         </div>
       </div>
 
-      <ChangeImageButton showButton={arrowButtons} handleButtonClick={handleLeft} direction="left" />
-      <img
-        ref={refCurrentImage}
-        className="show-image image-slide"
-        style={style}
-        src={getCurrentImageSrc()}
-        alt=""
-        draggable={false}
-      />
-      <ChangeImageButton showButton={arrowButtons} handleButtonClick={handleRight} direction="right" />
+      <div className={styles['slider']}>
+        {arrowButtons && <ChangeImageButton handleButtonClick={() => handleClick('right')} direction="left" />}
+
+        <div
+          {...handleSwiper}
+          ref={(el) => {
+            refSlide.current = el;
+            if (swipable && handleSwiper) handleSwiper.ref(el);
+          }}
+          className={styles['slide']}
+          style={{ transform: `translateX(-${state.pos * 100}%)` }}
+        >
+          {imageCount > 1 && <SliderImageContainer src={children[children.length - 1].props.src} />}
+          {Children.map(children, (child) => {
+            return <SliderImageContainer src={child.props.src} />;
+          })}
+
+          {imageCount > 1 && <SliderImageContainer src={children[0].props.src} />}
+        </div>
+        {arrowButtons && <ChangeImageButton handleButtonClick={() => handleClick('left')} direction="right" />}
+      </div>
     </div>
   );
 }

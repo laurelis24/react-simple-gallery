@@ -10,6 +10,7 @@
 - Slides from thumbnail
 - Keyboard navigation
 - Swipe support
+- Infinite swipe
 
 ## Installation
 
@@ -20,7 +21,7 @@ npm install @laurelis/react-simple-gallery
 ## Usage
 
 ```tsx
-import ImageGallery, {Image} from '@laurelis/react-simple-gallery';
+import ImageGallery, { Image } from '@laurelis/react-simple-gallery';
 
 const images = [
   { id: 1, src: '/images/photo1.jpg' },
@@ -28,13 +29,12 @@ const images = [
   { id: 3, src: '/images/photo3.jpg' },
 ];
 
-
 function App() {
   return (
-    <ImageGallery>
+    <ImageGallery lazyLoading={true} keyboard={true} className={'your-class'}>
       {images.map((image) => (
         // Now you can add own style to images
-        <Image key={image.id} src={image.src} className={"your-class"}/>
+        <Image key={image.id} src={image.src} className={'your-class'} />
       ))}
     </ImageGallery>
   );
