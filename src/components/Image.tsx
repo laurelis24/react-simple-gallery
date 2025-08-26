@@ -1,10 +1,9 @@
 import { ImgHTMLAttributes } from 'react';
-
 export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
+  key: string | number;
   src: string;
-  alt?: string;
 }
 
-export default function Image({ src, alt, ...rest }: ImageProps) {
-  return <img src={src} alt={alt} {...rest} />;
+export default function Image({ ...rest }: ImageProps) {
+  return <img {...rest} />;
 }

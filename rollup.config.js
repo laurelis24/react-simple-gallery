@@ -5,8 +5,9 @@ import dts from 'rollup-plugin-dts';
 import terser from '@rollup/plugin-terser';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
+import crypto from 'crypto';
 
-const packageJson = require('./package.json');
+import packageJson from './package.json';
 
 export default [
   {
@@ -17,11 +18,13 @@ export default [
         file: packageJson.main,
         format: 'cjs',
         sourcemap: false,
+        exports: 'named',
       },
       {
         file: packageJson.module,
         format: 'esm',
         sourcemap: false,
+        exports: 'named',
       },
     ],
     plugins: [
@@ -30,7 +33,21 @@ export default [
       commonjs(),
       typescript({ tsconfig: './tsconfig.json' }),
       terser(),
-      postcss(),
+      postcss({
+        modules: {
+          generateScopedName: (name, filename, css) => {
+            const hash = crypto
+              .createHash('md5')
+              .update(filename + name)
+              .digest('base64')
+              .slice(0, 5)
+              .toLowerCase();
+
+            return `rsg_${name}_${hash}`;
+          },
+        },
+        extract: false, // index.css
+      }),
     ],
   },
   {
