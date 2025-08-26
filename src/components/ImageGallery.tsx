@@ -70,11 +70,11 @@ export default function ImageGallery({
 
   return (
     <>
-      <div ref={refGallery} className={styles.gallery + (className || '')}>
+      <div ref={refGallery} className={styles.gallery + (' ' + className || '')}>
         {Children.map(children, (child, index) =>
           isValidElement<ImageProps>(child)
             ? cloneElement(child, {
-                className: styles.item + (child.props?.className || ''),
+                className: styles.item + (' ' + child.props?.className || ''),
                 loading: lazyLoading ? 'lazy' : 'eager',
                 onClick: () => openModal(index),
               })

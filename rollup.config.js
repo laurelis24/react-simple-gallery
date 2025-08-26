@@ -39,11 +39,12 @@ export default [
             const hash = crypto
               .createHash('md5')
               .update(filename + name)
-              .digest('base64')
+              .digest('hex')
+              .replace(/[/+=]/g, '')
               .slice(0, 5)
               .toLowerCase();
 
-            return `rsg_${name}_${hash}`;
+            return `rsg_${name.replace('-', '_')}_${hash}`;
           },
         },
         extract: false, // index.css
