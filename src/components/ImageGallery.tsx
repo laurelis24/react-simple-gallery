@@ -65,6 +65,7 @@ export default function ImageGallery({
     const image = refGallery.current?.children[idx] as HTMLImageElement;
     const modalImage = Array.from(refSlide.current?.children || []).slice(1, -1)[idx].firstElementChild
       ?.firstElementChild as HTMLImageElement;
+
     return [image, modalImage];
   };
 
