@@ -12,7 +12,7 @@ import packageJson from './package.json';
 export default [
   {
     input: 'src/index.ts',
-    external: ['react', 'react-dom'],
+    external: ['react', 'react-dom', 'react-swipeable'],
     output: [
       {
         file: packageJson.main,

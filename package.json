@@ -53,6 +53,9 @@
     "rollup": "^4.41.1",
     "rollup-plugin-postcss": "^4.0.2"
   },
+  "peerDependencies": {
+    "react-swipeable": "^7.0.2"
+  },
   "prettier": {
     "printWidth": 120,
     "singleQuote": true,

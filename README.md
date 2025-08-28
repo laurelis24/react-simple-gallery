@@ -14,8 +14,10 @@
 
 ## Installation
 
+- Since react-swipeable is now a peer dependency, you also need to install it separately
+
 ```bash
-npm install @laurelis/react-simple-gallery
+npm install react-swipable @laurelis/react-simple-gallery
 ```
 
 ## Usage
