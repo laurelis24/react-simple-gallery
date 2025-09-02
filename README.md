@@ -14,10 +14,10 @@
 
 ## Installation
 
-- Since react-swipeable is now a peer dependency, you also need to install it separately
+- Since react-swipeable is now a peer dependency
 
 ```bash
-npm install react-swipable @laurelis/react-simple-gallery
+npm install @laurelis/react-simple-gallery
 ```
 
 ## Usage
@@ -48,7 +48,7 @@ function App() {
 | `lazyLoading`  | `boolean` | `true`  | Enable lazy loading of whole gallery (HTML lazy loading) |
 | `keyboard`     | `boolean` | `true`  | Enable keyboard navigation                               |
 | `arrowButtons` | `boolean` | `true`  | Enable show or hide arrow key buttons                    |
-| `swipable`     | `boolean` | `true`  | Enable swipe on/off (mobile and pc)                      |
+| `swipeable`    | `boolean` | `true`  | Enable swipe on/off (mobile and pc)                      |
 | `className`    | `string`  | —       | Optional CSS class for custom styling                    |
 
 ### Development & Contribution

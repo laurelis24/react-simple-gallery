@@ -11,7 +11,7 @@ interface ImageGalleryProps {
   lazyLoading?: boolean;
   keyboard?: boolean;
   arrowKeys?: boolean;
-  swipable?: boolean;
+  swipeable?: boolean;
   className?: string;
 }
 
@@ -26,7 +26,7 @@ export default function ImageGallery({
   lazyLoading = true,
   keyboard = true,
   arrowKeys = true,
-  swipable = true,
+  swipeable = true,
   className = '',
 }: ImageGalleryProps) {
   const [imageIndex, setImageIndex] = useState<number | null>(null);
@@ -71,11 +71,11 @@ export default function ImageGallery({
 
   return (
     <>
-      <div ref={refGallery} className={styles.gallery + (' ' + className || '')}>
+      <div ref={refGallery} className={styles.gallery + (className ? ` ${className}` : '')}>
         {Children.map(children, (child, index) =>
           isValidElement<ImageProps>(child)
             ? cloneElement(child, {
-                className: styles.item + (' ' + child.props?.className || ''),
+                className: styles.item + (child.props?.className ? ` ${child.props?.className}` : ''),
                 loading: lazyLoading ? 'lazy' : 'eager',
                 onClick: () => openModal(index),
               })
@@ -101,7 +101,7 @@ export default function ImageGallery({
           imageIndex={imageIndex}
           keyboard={keyboard}
           arrowButtons={arrowKeys}
-          swipable={swipable}
+          swipeable={swipeable}
           onClose={closeModal}
         />
       )}

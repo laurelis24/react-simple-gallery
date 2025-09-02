@@ -18,7 +18,7 @@ interface ImageSliderProps {
   imageIndex: number;
   keyboard?: boolean;
   arrowButtons?: boolean;
-  swipable?: boolean;
+  swipeable?: boolean;
   onClose: (idx: number) => void;
 }
 
@@ -29,7 +29,7 @@ export function ImageSlider({
   refSlide,
   keyboard = true,
   arrowButtons = true,
-  swipable = true,
+  swipeable = true,
   onClose,
 }: ImageSliderProps) {
   const options = { swipeThreshold: 70 };
@@ -159,13 +159,13 @@ export function ImageSlider({
         {arrowButtons && <ChangeImageButton handleButtonClick={() => handleClick('right')} direction="left" />}
 
         <div
-          {...handleSwiper}
+          {...(swipeable ? handleSwiper : {})}
           ref={(el) => {
             refSlide.current = el;
-            if (swipable && handleSwiper) handleSwiper.ref(el);
+            if (swipeable && handleSwiper) handleSwiper.ref(el);
           }}
           className={styles['slide']}
-          style={{ transform: `translateX(-${state.pos * 100}%)` }}
+          style={{ transform: `translateX(-${state.pos * 100}%)`, cursor: swipeable ? 'grab' : 'default' }}
         >
           {imageCount > 1 && <SliderImageContainer src={children[children.length - 1].props.src} />}
           {Children.map(children, (child) => {
