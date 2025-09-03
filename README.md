@@ -1,5 +1,7 @@
 # React Simple Gallery
 
+- https://laurelis24.github.io/react-simple-gallery/
+
 ## 📸 Demo
 
 ![Image Gallery Demo](https://raw.githubusercontent.com/laurelis24/simple-react-gallery/refs/heads/main/screenshots/gallery.gif)
@@ -14,7 +16,7 @@
 
 ## Installation
 
-- Since react-swipeable is now a peer dependency
+- react-swipeable is now a peer dependency (You have to install react-swipeable)
 
 ```bash
 npm install @laurelis/react-simple-gallery
