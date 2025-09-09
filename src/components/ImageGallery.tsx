@@ -1,16 +1,25 @@
-import { Children, cloneElement, isValidElement, ReactElement, useRef, useState } from 'react';
-import { ImageSlider } from './ImageSlider';
+import {
+  Children,
+  cloneElement,
+  isValidElement,
+  ReactElement,
+  useRef,
+  useState,
+  createContext,
+  RefObject,
+} from 'react';
 import { ImageProps } from './Image';
-import AnimatedImageClone from './AnimatedImageClone';
+import AnimatedImageClone from './modal/main/AnimatedImageClone';
 import { Rectangle } from '../types/types';
 
 import styles from '../style.module.css';
+import { ModalImageGallery } from './modal/main/ModalImageGallery';
 
 interface ImageGalleryProps {
   children: ReactElement<ImageProps>[];
   lazyLoading?: boolean;
   keyboard?: boolean;
-  arrowKeys?: boolean;
+  arrowButtons?: boolean;
   swipeable?: boolean;
   className?: string;
 }
@@ -21,11 +30,20 @@ interface AnimatedImage {
   endRect: Rectangle;
 }
 
+interface ImageGalleryContextProps extends Readonly<Omit<ImageGalleryProps, 'lazyloading' & 'className'>> {
+  imageCount: number;
+  refSlide: RefObject<HTMLDivElement | null>;
+  imageIndex: number | null;
+  onClose: (idx: number) => void;
+}
+
+export const ImageGalleryContext = createContext<ImageGalleryContextProps | null>(null);
+
 export default function ImageGallery({
   children,
   lazyLoading = true,
   keyboard = true,
-  arrowKeys = true,
+  arrowButtons = true,
   swipeable = true,
   className = '',
 }: ImageGalleryProps) {
@@ -70,7 +88,18 @@ export default function ImageGallery({
   };
 
   return (
-    <>
+    <ImageGalleryContext
+      value={{
+        children: children,
+        imageCount: imageCount,
+        swipeable: swipeable,
+        keyboard: keyboard,
+        imageIndex: imageIndex,
+        arrowButtons: arrowButtons,
+        refSlide: refSlide,
+        onClose: closeModal,
+      }}
+    >
       <div ref={refGallery} className={styles.gallery + (className ? ` ${className}` : '')}>
         {Children.map(children, (child, index) =>
           isValidElement<ImageProps>(child)
@@ -93,18 +122,7 @@ export default function ImageGallery({
         />
       )}
 
-      {imageIndex !== null && (
-        <ImageSlider
-          children={children}
-          imageCount={imageCount}
-          refSlide={refSlide}
-          imageIndex={imageIndex}
-          keyboard={keyboard}
-          arrowButtons={arrowKeys}
-          swipeable={swipeable}
-          onClose={closeModal}
-        />
-      )}
-    </>
+      {imageIndex !== null && <ModalImageGallery />}
+    </ImageGalleryContext>
   );
 }

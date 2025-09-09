@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import styles from '../style.module.css';
-import LoadingSpinner from './loaders/LoadingSpinner';
+import styles from '../../../style.module.css';
+import LoadingSpinner from '../../loaders/LoadingSpinner';
 export default function SliderImageContainer({ src }: { src: string }) {
   const [loading, setLoading] = useState(true);
 
