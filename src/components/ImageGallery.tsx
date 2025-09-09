@@ -1,21 +1,13 @@
-import {
-  Children,
-  cloneElement,
-  isValidElement,
-  ReactElement,
-  useRef,
-  useState,
-  createContext,
-  RefObject,
-} from 'react';
+import { Children, cloneElement, isValidElement, ReactElement, useRef, useState } from 'react';
 import { ImageProps } from './Image';
 import AnimatedImageClone from './modal/main/AnimatedImageClone';
 import { Rectangle } from '../types/types';
 
 import styles from '../style.module.css';
 import { ModalImageGallery } from './modal/main/ModalImageGallery';
+import { ImageGalleryContext } from '../context/ImageGalleryContext';
 
-interface ImageGalleryProps {
+export interface ImageGalleryProps {
   children: ReactElement<ImageProps>[];
   lazyLoading?: boolean;
   keyboard?: boolean;
@@ -29,15 +21,6 @@ interface AnimatedImage {
   startRect: Rectangle;
   endRect: Rectangle;
 }
-
-interface ImageGalleryContextProps extends Readonly<Omit<ImageGalleryProps, 'lazyloading' & 'className'>> {
-  imageCount: number;
-  refSlide: RefObject<HTMLDivElement | null>;
-  imageIndex: number | null;
-  onClose: (idx: number) => void;
-}
-
-export const ImageGalleryContext = createContext<ImageGalleryContextProps | null>(null);
 
 export default function ImageGallery({
   children,

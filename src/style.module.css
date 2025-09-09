@@ -15,7 +15,9 @@
 .gallery .item {
   display: inline-block;
   filter: grayscale(10%) brightness(95%);
-  transition: transform 0.3s ease, filter 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
   cursor: pointer;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
@@ -197,9 +199,9 @@
   overflow: hidden;
 }
 .fullscreen-wrapper .thumbnail-footer-container .thumbnail-footer .thumbnail-slider {
-  margin: auto;
   display: inline-flex;
   transition: transform 0.3s;
+  margin: auto;
   height: 100%;
 }
 .fullscreen-wrapper .thumbnail-footer-container .thumbnail-footer .thumbnail-slider div {
@@ -313,7 +315,7 @@
   background-color: var(--uib-color);
   width: 20%;
   height: 20%;
-  content: "";
+  content: '';
 }
 .spinner-container .spinner-dot:nth-child(1)::before {
   transform: translateX(var(--uib-center));

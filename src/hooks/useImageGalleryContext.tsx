@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ImageGalleryContext } from '../components/ImageGallery';
+import { ImageGalleryContext } from '../context/ImageGalleryContext';
 
 export default function useImageGalleryContext() {
   const context = useContext(ImageGalleryContext);

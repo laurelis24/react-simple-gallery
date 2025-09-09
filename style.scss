@@ -210,9 +210,9 @@
       height: 100%;
       overflow: hidden;
       .thumbnail-slider {
-        margin: auto;
         display: inline-flex;
         transition: transform 0.3s;
+        margin: auto;
         height: 100%;
         div {
           opacity: 0.5;
