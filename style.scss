@@ -206,15 +206,12 @@
     color: white;
     .thumbnail-footer {
       margin: auto;
-      //padding: 20px;
       width: 70%;
       height: 100%;
       overflow: hidden;
-
       .thumbnail-slider {
+        margin: auto;
         display: inline-flex;
-        //display: flex;
-        //display: inline-block;
         transition: transform 0.3s;
         height: 100%;
         div {
