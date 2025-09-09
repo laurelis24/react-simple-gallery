@@ -1,12 +1,4 @@
-import { Direction } from '../types/types';
-
-interface MyState {
-  pos: number;
-  direction: Direction;
-  imageCount: number;
-}
-
-type MyAction = { direction: Direction };
+import { MyAction, MyState } from '../types/types';
 
 export default function reducer(state: MyState, action: MyAction): MyState {
   switch (action.direction) {
@@ -20,6 +12,11 @@ export default function reducer(state: MyState, action: MyAction): MyState {
       return {
         ...state,
         pos: state.pos <= 1 ? state.imageCount : state.pos - 1,
+      };
+    case 'set-position':
+      return {
+        ...state,
+        pos: action.pos || 0,
       };
   }
 }

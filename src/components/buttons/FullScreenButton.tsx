@@ -2,15 +2,15 @@ import { RefObject, useEffect, useState } from 'react';
 import styles from '../../style.module.css';
 
 interface FullScreenButtonProps {
-  refSlider: RefObject<HTMLDivElement | null>;
+  refSlide: RefObject<HTMLDivElement | null>;
 }
 
-export default function FullScreenButton({ refSlider }: FullScreenButtonProps) {
+export default function FullScreenButton({ refSlide }: FullScreenButtonProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     const onChange = () => {
-      setIsFullscreen(document.fullscreenElement === refSlider.current);
+      setIsFullscreen(document.fullscreenElement === refSlide.current);
     };
 
     document.addEventListener('fullscreenchange', onChange);
@@ -19,7 +19,7 @@ export default function FullScreenButton({ refSlider }: FullScreenButtonProps) {
 
   const handleFullScreen = () => {
     if (!document.fullscreenElement) {
-      refSlider.current?.requestFullscreen();
+      refSlide.current?.requestFullscreen();
     } else {
       document.exitFullscreen();
     }

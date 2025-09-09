@@ -1,6 +1,6 @@
 import { CSSProperties, RefObject, useLayoutEffect, useState } from 'react';
-import { Rectangle } from '../types/types';
-import styles from '../style.module.css';
+import { Rectangle } from '../../../types/types';
+import styles from '../../../style.module.css';
 
 interface AnimatedImageClone {
   src: string;

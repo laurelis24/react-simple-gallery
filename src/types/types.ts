@@ -1,4 +1,4 @@
-export type Direction = 'left' | 'right';
+export type Direction = 'left' | 'right' | 'set-position';
 
 export interface Rectangle {
   top: number;
@@ -6,3 +6,11 @@ export interface Rectangle {
   width: number;
   height: number;
 }
+
+export interface MyState {
+  pos: number;
+  direction: Direction;
+  imageCount: number;
+}
+
+export type MyAction = { direction: Direction; pos?: number };
