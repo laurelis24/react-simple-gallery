@@ -19,7 +19,7 @@
 - react-swipeable is now a peer dependency (You have to install react-swipeable)
 
 ```bash
-npm install @laurelis/react-simple-gallery
+npm install -D @laurelis/react-simple-gallery
 ```
 
 ## Usage
@@ -52,6 +52,16 @@ function App() {
 | `arrowButtons` | `boolean` | `true`  | Enable show or hide arrow key buttons                    |
 | `swipeable`    | `boolean` | `true`  | Enable swipe on/off (mobile and pc)                      |
 | `className`    | `string`  | —       | Optional CSS class for custom styling                    |
+
+## Performance
+
+To increase performance, consider the following suggestions:
+
+- Use small, optimized images to reduce memory usage and loading times.
+- Prefer modern image formats (e.g., WebP, AVIF) for better compression.
+- Lazy-load images that are not immediately visible on the screen.
+- Compress images without losing noticeable quality.
+- Use responsive images (`srcSet`) to serve different sizes based on device resolution.
 
 ### Development & Contribution
 
