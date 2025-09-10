@@ -1,7 +1,7 @@
 {
   "name": "@laurelis/react-simple-gallery",
   "version": "1.2.0",
-  "description": "Simple image gallery moving from thumbnail for React",
+  "description": "Simple image gallery for React.js",
   "license": "MIT",
   "author": "Lauris Kairo",
   "type": "module",

@@ -88,7 +88,7 @@ export default function ImageGallery({
           isValidElement<ImageProps>(child)
             ? cloneElement(child, {
                 className: styles.item + (child.props?.className ? ` ${child.props?.className}` : ''),
-                loading: lazyLoading ? 'lazy' : 'eager',
+                loading: lazyLoading ? 'lazy' : undefined,
                 onClick: () => openModal(index),
               })
             : child,

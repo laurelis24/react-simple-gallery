@@ -98,12 +98,17 @@ export default function ModalSlider({ state, swipePosition }: ModalSliderProps) 
         className={styles['slide']}
         style={{ transform: `translateX(-${state.pos * 100}%)`, cursor: swipeable ? 'grab' : 'default' }}
       >
-        {imageCount > 1 && <SliderImageContainer src={children[children.length - 1].props.src} />}
+        {imageCount > 1 && (
+          <SliderImageContainer
+            src={children[children.length - 1].props.src}
+            alt={children[children.length - 1].props.alt}
+          />
+        )}
         {Children.map(children, (child) => {
-          return <SliderImageContainer src={child.props.src} />;
+          return <SliderImageContainer src={child.props.src} alt={child.props.alt} />;
         })}
 
-        {imageCount > 1 && <SliderImageContainer src={children[0].props.src} />}
+        {imageCount > 1 && <SliderImageContainer src={children[0].props.src} alt={children[0].props.alt} />}
       </div>
       {arrowButtons && <ChangeImageButton handleButtonClick={() => handleClick('left')} direction="right" />}
     </div>

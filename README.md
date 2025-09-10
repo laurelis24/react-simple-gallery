@@ -28,9 +28,9 @@ npm install @laurelis/react-simple-gallery
 import ImageGallery, { Image } from '@laurelis/react-simple-gallery';
 
 const images = [
-  { id: 1, src: '/images/photo1.jpg' },
-  { id: 2, src: '/images/photo2.jpg' },
-  { id: 3, src: '/images/photo3.jpg' },
+  { id: 1, title: "Image-1" src: '/images/photo1.jpg' },
+  { id: 2, title: "Image-2", src: '/images/photo2.jpg' },
+  { id: 3, title: "Image-3", src: '/images/photo3.jpg' },
 ];
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
     <ImageGallery lazyLoading={true} keyboard={true} className={'your-class'}>
       {images.map((image) => (
         // Now you can add own style to images
-        <Image key={image.id} src={image.src} className={'your-class'} />
+        <Image key={image.id} src={image.src} alt={image.title} className={'your-class'} />
       ))}
     </ImageGallery>
   );

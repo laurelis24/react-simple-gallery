@@ -178,7 +178,7 @@ export default function ModalThumbnailFooter({ state, setPosition }: ModalThumbn
               onMouseMove={handleMouseMove}
               onClick={() => handleClick(idx)}
             >
-              <img src={child.props.src} alt={`Image-${idx + 1}`} />
+              <img src={child.props.src} alt={child.props.alt} />
             </div>
           ))}
         </div>
