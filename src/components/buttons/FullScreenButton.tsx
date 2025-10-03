@@ -27,7 +27,7 @@ export default function FullScreenButton({ refSlide }: FullScreenButtonProps) {
   };
 
   return (
-    <button onClick={handleFullScreen} className={styles['fullscreen-btn']}>
+    <button title='Toggle full-screen mode' onClick={handleFullScreen} className={styles['fullscreen-btn']}>
       {!isFullscreen ? (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <path

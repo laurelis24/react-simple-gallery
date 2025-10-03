@@ -13,6 +13,7 @@ export default function ChangeImageButton({ handleButtonClick, direction }: Chan
         handleButtonClick();
       }}
       className={`${direction === 'left' ? styles['left-btn'] : styles['right-btn']}`}
+      title={direction === 'left' ? "Previous image" : "Next image"}
     >
       {direction === 'left' ? (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">

@@ -18,7 +18,6 @@ export default function useAddKeyboard({ state, handleClick }: AddKeyboardEvent)
   }, [handleClose]);
 
   useEffect(() => {
-    // if (!keyboard) return;
     let keyPressed = false;
 
     const handleKeyDown = (e: KeyboardEvent) => {
