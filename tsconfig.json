@@ -16,5 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "index.tsx"]
+  "include": ["src", "githubPage/index.tsx", "githubPage/App.tsx"]
 }

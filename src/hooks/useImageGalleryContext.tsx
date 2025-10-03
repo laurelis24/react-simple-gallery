@@ -15,6 +15,7 @@ export default function useImageGalleryContext() {
     imageIndex: context.imageIndex,
     refSlide: context.refSlide,
     keyboard: context.keyboard,
+    fullScreenButton: context.fullScreenButton,
     onClose: context.onClose,
   };
 }

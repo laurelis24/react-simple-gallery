@@ -95,7 +95,7 @@ export default function ModalSlider({ state, swipePosition }: ModalSliderProps) 
           refSlide.current = el;
           if (swipeable && handleSwiper) handleSwiper.ref(el);
         }}
-        className={styles['slide']}
+        className={`${styles['slide']} ${styles['unselectable']}`}
         style={{ transform: `translateX(-${state.pos * 100}%)`, cursor: swipeable ? 'grab' : 'default' }}
       >
         {imageCount > 1 && (

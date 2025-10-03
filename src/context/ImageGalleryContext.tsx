@@ -9,4 +9,3 @@ interface ImageGalleryContextProps extends Readonly<Omit<ImageGalleryProps, 'laz
 }
 
 export const ImageGalleryContext = createContext<ImageGalleryContextProps | null>(null);
-``;

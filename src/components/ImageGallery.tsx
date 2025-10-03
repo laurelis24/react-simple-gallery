@@ -13,6 +13,7 @@ export interface ImageGalleryProps {
   keyboard?: boolean;
   arrowButtons?: boolean;
   swipeable?: boolean;
+  fullScreenButton?: boolean;
   className?: string;
 }
 
@@ -28,6 +29,7 @@ export default function ImageGallery({
   keyboard = true,
   arrowButtons = true,
   swipeable = true,
+  fullScreenButton = true,
   className = '',
 }: ImageGalleryProps) {
   const [imageIndex, setImageIndex] = useState<number | null>(null);
@@ -80,6 +82,7 @@ export default function ImageGallery({
         imageIndex: imageIndex,
         arrowButtons: arrowButtons,
         refSlide: refSlide,
+        fullScreenButton: fullScreenButton,
         onClose: closeModal,
       }}
     >

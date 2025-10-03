@@ -46,8 +46,9 @@ export default function ModalThumbnailFooter({ state, setPosition }: ModalThumbn
 
     const containerWidth = container.clientWidth;
     const contentWidth = slider.scrollWidth;
-    const minX = Math.min(0, containerWidth - contentWidth);
-    const maxX = 0;
+    if (contentWidth <= containerWidth) return;
+    const minX = Math.min(0, containerWidth - contentWidth - 5);
+    const maxX = Math.max(0, Math.abs(containerWidth - contentWidth) + 5);
 
     let newX = offsetX.current + data.deltaX;
 
@@ -80,8 +81,9 @@ export default function ModalThumbnailFooter({ state, setPosition }: ModalThumbn
 
     const containerWidth = container.clientWidth;
     const contentWidth = slider.scrollWidth;
-    const minX = Math.min(0, containerWidth - contentWidth);
-    const maxX = 0;
+    if (contentWidth <= containerWidth) return;
+    const minX = Math.min(0, containerWidth - contentWidth - 5);
+    const maxX = Math.max(0, Math.abs(containerWidth - contentWidth) + 5);
 
     const child = slider.children[index] as HTMLElement;
     if (!child) return;
@@ -118,8 +120,10 @@ export default function ModalThumbnailFooter({ state, setPosition }: ModalThumbn
 
     const containerWidth = container.clientWidth;
     const contentWidth = slider.scrollWidth;
-    const minX = Math.min(0, containerWidth - contentWidth);
-    const maxX = 0;
+    if (contentWidth <= containerWidth) return;
+
+    const minX = Math.min(0, containerWidth - contentWidth - 5);
+    const maxX = Math.max(0, Math.abs(containerWidth - contentWidth) + 5);
 
     const step = () => {
       // Apply velocity
@@ -168,11 +172,11 @@ export default function ModalThumbnailFooter({ state, setPosition }: ModalThumbn
             refThumbnailSlider.current = el;
             handleSwiper.ref(el);
           }}
-          className={styles['thumbnail-slider']}
+          className={`${styles['thumbnail-slider']} ${styles['unselectable']}`}
         >
           {Children.map(children, (child, idx) => (
             <div
-              className={state.pos === idx + 1 ? styles['selected'] : ''}
+              className={`${state.pos === idx + 1 ? styles['selected'] : ''}`}
               key={idx}
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}

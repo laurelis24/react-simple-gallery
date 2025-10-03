@@ -45,13 +45,14 @@ function App() {
 }
 ```
 
-| Prop           | Type      | Default | Description                                              |
-| -------------- | --------- | ------- | -------------------------------------------------------- |
-| `lazyLoading`  | `boolean` | `true`  | Enable lazy loading of whole gallery (HTML lazy loading) |
-| `keyboard`     | `boolean` | `true`  | Enable keyboard navigation                               |
-| `arrowButtons` | `boolean` | `true`  | Enable show or hide arrow key buttons                    |
-| `swipeable`    | `boolean` | `true`  | Enable swipe on/off (mobile and pc)                      |
-| `className`    | `string`  | —       | Optional CSS class for custom styling                    |
+| Prop               | Type      | Default | Description                                              |
+| ------------------ | --------- | ------- | -------------------------------------------------------- |
+| `lazyLoading`      | `boolean` | `true`  | Enable lazy loading of whole gallery (HTML lazy loading) |
+| `keyboard`         | `boolean` | `true`  | Enable keyboard navigation (LEFT, RIGHT, ESC)            |
+| `arrowButtons`     | `boolean` | `true`  | Show or hide arrow key buttons                           |
+| `swipeable`        | `boolean` | `true`  | Enable swipe on/off (mobile and pc)                      |
+| `fullScreenButton` | `boolean` | `true`  | Show or hide full screen button                          |
+| `className`        | `string`  | —       | Optional CSS class for custom styling                    |
 
 ## Performance
 

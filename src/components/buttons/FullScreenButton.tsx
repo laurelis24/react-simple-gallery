@@ -1,5 +1,6 @@
 import { RefObject, useEffect, useState } from 'react';
 import styles from '../../style.module.css';
+import useImageGalleryContext from '../../hooks/useImageGalleryContext';
 
 interface FullScreenButtonProps {
   refSlide: RefObject<HTMLDivElement | null>;
