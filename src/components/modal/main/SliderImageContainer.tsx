@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import styles from '../../../style.module.css';
 import LoadingSpinner from '../../loaders/LoadingSpinner';
 export default function SliderImageContainer({ src, alt }: { src: string; alt?: string }) {
@@ -12,9 +12,10 @@ export default function SliderImageContainer({ src, alt }: { src: string; alt?: 
           alt={alt}
           onLoad={() => setLoading(false)}
           draggable={false}
-          style={{ opacity: loading ? 0 : 1 }}
+          style={{ display: loading ? 'hidden' : 'inherit' }}
         />
-        {loading && <LoadingSpinner />}
+
+        {loading && <LoadingSpinner className="modal-spinner" />}
       </div>
     </div>
   );
