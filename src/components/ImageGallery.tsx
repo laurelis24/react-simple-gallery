@@ -2,7 +2,6 @@ import { Children, cloneElement, isValidElement, ReactElement, useRef, useState 
 import { ImageProps } from './Image';
 import AnimatedImageClone from './modal/main/AnimatedImageClone';
 import { Rectangle } from '../types/types';
-
 import styles from '../style.module.css';
 import { ModalImageGallery } from './modal/main/ModalImageGallery';
 import { ImageGalleryContext } from '../context/ImageGalleryContext';
@@ -14,6 +13,7 @@ export interface ImageGalleryProps {
   arrowButtons?: boolean;
   swipeable?: boolean;
   fullScreenButton?: boolean;
+  showImageCount?: number;
   className?: string;
 }
 
@@ -30,6 +30,7 @@ export default function ImageGallery({
   arrowButtons = true,
   swipeable = true,
   fullScreenButton = true,
+  showImageCount = Infinity,
   className = '',
 }: ImageGalleryProps) {
   const [imageIndex, setImageIndex] = useState<number | null>(null);
@@ -55,11 +56,13 @@ export default function ImageGallery({
   const closeModal = (idx: number) => {
     const [image, modalImage] = imageAndModalImage(idx);
 
-    setAnimatedImage({
-      src: image.src,
-      startRect: modalImage.getBoundingClientRect(),
-      endRect: image.getBoundingClientRect(),
-    });
+    if (showImageCount - 1 >= idx) {
+      setAnimatedImage({
+        src: image.src,
+        startRect: modalImage.getBoundingClientRect(),
+        endRect: image.getBoundingClientRect(),
+      });
+    }
 
     requestAnimationFrame(() => setImageIndex(null));
   };
@@ -71,6 +74,10 @@ export default function ImageGallery({
 
     return [image, modalImage];
   };
+
+  if (children.length < 2) {
+    throw new Error('For gallery to work, please use atleast 2 images');
+  }
 
   return (
     <ImageGalleryContext
@@ -87,7 +94,7 @@ export default function ImageGallery({
       }}
     >
       <div ref={refGallery} className={styles.gallery + (className ? ` ${className}` : '')}>
-        {Children.map(children, (child, index) =>
+        {Children.map(children.slice(0, showImageCount), (child, index) =>
           isValidElement<ImageProps>(child)
             ? cloneElement(child, {
                 className: styles.item + (child.props?.className ? ` ${child.props?.className}` : ''),
