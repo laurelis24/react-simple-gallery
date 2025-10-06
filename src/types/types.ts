@@ -1,4 +1,5 @@
 export type Direction = 'left' | 'right' | 'set-position';
+export type GalleryLayout = 'flex' | 'masonry';
 
 export interface Rectangle {
   top: number;

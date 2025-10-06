@@ -11,13 +11,11 @@ interface ModalNavbarProps {
 }
 
 export default function ModalNavbar({ state, refSlider }: ModalNavbarProps) {
-  const { onClose, fullScreenButton } = useImageGalleryContext();
+  const { fullScreenButton, sliderIndex, onClose } = useImageGalleryContext();
 
   return (
     <div className={styles['nav-container']}>
-      <div className={styles['left-container']}>
-        <ImageCounter imagePosition={state.pos} />
-      </div>
+      <div className={styles['left-container']}>{sliderIndex && <ImageCounter imagePosition={state.pos} />}</div>
       <div className={styles['right-container']}>
         {fullScreenButton && <FullScreenButton refSlide={refSlider} />}
         <ExitButton handleClose={() => onClose(state.pos - 1)} />
