@@ -1,7 +1,7 @@
 import { Children, cloneElement, isValidElement, ReactElement, useRef, useState } from 'react';
 import { ImageProps } from './Image';
 import AnimatedImageClone from './modal/main/AnimatedImageClone';
-import { Rectangle } from '../types/types';
+import { GalleryLayout, Rectangle } from '../types/types';
 import styles from '../style.module.css';
 import { ModalImageGallery } from './modal/main/ModalImageGallery';
 import { ImageGalleryContext } from '../context/ImageGalleryContext';
@@ -14,6 +14,9 @@ export interface ImageGalleryProps {
   swipeable?: boolean;
   fullScreenButton?: boolean;
   showImageCount?: number;
+  sliderThumbnail?: boolean;
+  sliderIndex?: boolean;
+  layout: GalleryLayout;
   className?: string;
 }
 
@@ -31,6 +34,9 @@ export default function ImageGallery({
   swipeable = true,
   fullScreenButton = true,
   showImageCount = Infinity,
+  sliderThumbnail = true,
+  sliderIndex = true,
+  layout = 'masonry',
   className = '',
 }: ImageGalleryProps) {
   const [imageIndex, setImageIndex] = useState<number | null>(null);
@@ -76,7 +82,7 @@ export default function ImageGallery({
   };
 
   if (children.length < 2) {
-    throw new Error('For gallery to work, please use atleast 2 images');
+    throw new Error('For gallery to work properly, please use atleast 2 images');
   }
 
   return (
@@ -90,10 +96,16 @@ export default function ImageGallery({
         arrowButtons: arrowButtons,
         refSlide: refSlide,
         fullScreenButton: fullScreenButton,
+        sliderThumbnail: sliderThumbnail,
+        sliderIndex: sliderIndex,
+        layout: layout,
         onClose: closeModal,
       }}
     >
-      <div ref={refGallery} className={styles.gallery + (className ? ` ${className}` : '')}>
+      <div
+        ref={refGallery}
+        className={`${styles.gallery} ${layout === 'flex' ? styles.flex : styles.masonry} ${className ? className : ''}`.trim()}
+      >
         {Children.map(children.slice(0, showImageCount), (child, index) =>
           isValidElement<ImageProps>(child)
             ? cloneElement(child, {

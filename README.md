@@ -45,15 +45,18 @@ function App() {
 }
 ```
 
-| Prop               | Type      | Default    | Description                                                       |
-| ------------------ | --------- | ---------- | ----------------------------------------------------------------- |
-| `lazyLoading`      | `boolean` | `true`     | Enable lazy loading of whole gallery (HTML lazy loading)          |
-| `keyboard`         | `boolean` | `true`     | Enable keyboard navigation (LEFT, RIGHT, ESC)                     |
-| `arrowButtons`     | `boolean` | `true`     | Show or hide arrow key buttons                                    |
-| `swipeable`        | `boolean` | `true`     | Enable swipe on/off (mobile and pc)                               |
-| `fullScreenButton` | `boolean` | `true`     | Show or hide full screen button                                   |
-| `showImageCount`   | `number`  | `Infinity` | Specifies the number of images initially displayed in the gallery |
-| `className`        | `string`  | —          | Optional CSS class for custom styling                             |
+| Prop               | Type      | Default    | Description                                                               |
+| ------------------ | --------- | ---------- | ------------------------------------------------------------------------- |
+| `keyboard`         | `boolean` | `true`     | Enable keyboard navigation (LEFT, RIGHT, ESC)                             |
+| `arrowButtons`     | `boolean` | `true`     | Show or hide arrow key buttons                                            |
+| `swipeable`        | `boolean` | `true`     | Enable swipe on/off (mobile and pc)                                       |
+| `fullScreenButton` | `boolean` | `true`     | Show or hide full screen button                                           |
+| `showImageCount`   | `number`  | `Infinity` | Specifies the number of images initially displayed in the gallery (min-1) |
+| `sliderThumbnail`  | `boolean` | `true`     | Show or hide sliders image thumbnail navigation                           |
+| `sliderIndex`      | `boolean` | `true`     | Show or hide sliders image index/position                                 |
+| `layout`           | `string`  | `masonry`  | Gallery layout type - "masonry" and "flex"                                |
+| `lazyLoading`      | `boolean` | `true`     | Enable lazy loading of whole gallery (HTML lazy loading)                  |
+| `className`        | `string`  | —          | Optional CSS class for custom styling                                     |
 
 ## Performance
 

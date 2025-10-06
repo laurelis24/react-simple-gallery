@@ -8,7 +8,7 @@ import useImageGalleryContext from '../../../hooks/useImageGalleryContext';
 import ModalNavbar from '../nav/ModalNavbar';
 
 export function ModalImageGallery() {
-  const { imageCount, imageIndex } = useImageGalleryContext();
+  const { imageCount, imageIndex, sliderThumbnail } = useImageGalleryContext();
   const refSlider = useRef<HTMLDivElement>(null);
   const [state, dispatch] = useReducer(reducer, {
     pos: (imageIndex || 0) + 1,
@@ -23,7 +23,7 @@ export function ModalImageGallery() {
     <div ref={refSlider} className={styles['fullscreen-wrapper']}>
       <ModalNavbar state={state} refSlider={refSlider} />
       <Slider state={state} swipePosition={handleSwipePosition} />
-      <ThumbnailNavigation setPosition={handleSwipePosition} state={state} />
+      {sliderThumbnail && <ThumbnailNavigation setPosition={handleSwipePosition} state={state} />}
     </div>
   );
 }
