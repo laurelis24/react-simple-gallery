@@ -1,11 +1,14 @@
 import { useEffect, useRef } from 'react';
 import useImageGalleryContext from './useImageGalleryContext';
-import { Direction, MyState } from '../types/types';
+import { MyState, MySwipeDirection } from '../types/types';
+
 interface AddKeyboardEvent {
-  handleClick: (direction: Direction) => void;
+  enabled: boolean;
   state: MyState;
+  handleClick: (direction: MySwipeDirection) => void;
 }
-export default function useAddKeyboard({ state, handleClick }: AddKeyboardEvent) {
+
+export default function useAddKeyboard({ enabled, state, handleClick }: AddKeyboardEvent) {
   const { onClose } = useImageGalleryContext();
 
   const handleClose = () => {
@@ -18,17 +21,20 @@ export default function useAddKeyboard({ state, handleClick }: AddKeyboardEvent)
   }, [handleClose]);
 
   useEffect(() => {
+    if (!enabled) return;
+
     let keyPressed = false;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (keyPressed) return;
+
       switch (e.key) {
         case 'ArrowLeft':
-          handleClick('right');
+          handleClick('Right');
           keyPressed = true;
           break;
         case 'ArrowRight':
-          handleClick('left');
+          handleClick('Left');
           keyPressed = true;
           break;
         case 'Escape':

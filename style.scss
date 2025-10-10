@@ -184,6 +184,7 @@
 
     .slide {
       display: flex;
+      transition: transform 0.3s;
       width: 100%;
       height: 100%;
       .slide-container {
@@ -215,8 +216,17 @@
       }
     }
 
-    .slider-transition {
-      transition: transform 0.3s;
+    .swipeable {
+      cursor: grab;
+    }
+
+    .slide.no-transition {
+      transition: none;
+    }
+
+    .grabbed {
+      transition: none;
+      cursor: grabbing;
     }
   }
 

@@ -1,12 +1,12 @@
 import { Children, useEffect, useRef } from 'react';
 import styles from '../../../style.module.css';
 import { SwipeEventData, useSwipeable } from 'react-swipeable';
-import { Direction, MyState } from '../../../types/types';
+import { MyState, MySwipeDirection } from '../../../types/types';
 import useImageGalleryContext from '../../../hooks/useImageGalleryContext';
 
 interface ModalThumbnailProps {
   state: MyState;
-  setPosition: (direction: Direction, position: number) => void;
+  setPosition: (direction: MySwipeDirection, position: number) => void;
 }
 
 export default function ModalThumbnailFooter({ state, setPosition }: ModalThumbnailProps) {
@@ -15,7 +15,7 @@ export default function ModalThumbnailFooter({ state, setPosition }: ModalThumbn
   const offsetX = useRef(0);
   const velocityX = useRef(0);
   let animationFrame: number | null = null;
-  const clickThreshold = 5; // max movement allowed to count as click
+  const clickThreshold = 5;
   let startX = 0;
   let startY = 0;
   let isDragging = false;
@@ -104,8 +104,7 @@ export default function ModalThumbnailFooter({ state, setPosition }: ModalThumbn
 
   const handleClick = (index: number) => {
     if (!isDragging) {
-      setPosition('set-position', index + 1);
-      scrollToIndex(index);
+      setPosition('BasedOnIndex', index + 1);
     }
   };
 

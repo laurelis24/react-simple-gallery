@@ -14,7 +14,7 @@ export default function useImageGalleryContext() {
     imageCount: context.imageCount,
     imageIndex: context.imageIndex,
     refSlide: context.refSlide,
-    keyboard: context.keyboard,
+    keyboard: context.keyboard || false,
     fullScreenButton: context.fullScreenButton,
     sliderThumbnail: context.sliderThumbnail,
     sliderIndex: context.sliderIndex,

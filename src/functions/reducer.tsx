@@ -1,22 +1,34 @@
 import { MyAction, MyState } from '../types/types';
 
 export default function reducer(state: MyState, action: MyAction): MyState {
+  const leftPos = action.direction === 'Left' && state.pos === state.imageCount + 1 ? 1 : state.pos + 1;
+  const rightPos = action.direction === 'Right' && state.pos <= 0 ? state.imageCount : state.pos - 1;
+
+  action.refIndex.current = action.direction === 'Right' ? rightPos : leftPos;
+
   switch (action.direction) {
-    case 'left':
+    case 'Left':
       return {
         ...state,
-        pos: state.pos === state.imageCount ? 1 : state.pos + 1,
+        pos: leftPos,
       };
 
-    case 'right':
+    case 'Right':
       return {
         ...state,
-        pos: state.pos <= 1 ? state.imageCount : state.pos - 1,
+        pos: rightPos,
       };
-    case 'set-position':
+
+    case 'Down':
+      return state;
+
+    case 'Up':
+      return state;
+
+    case 'BasedOnIndex':
       return {
         ...state,
-        pos: action.pos || 0,
+        pos: action.pos || 1,
       };
   }
 }

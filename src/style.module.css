@@ -173,6 +173,7 @@
 }
 .fullscreen-wrapper .slider .slide {
   display: flex;
+  transition: transform 0.3s;
   width: 100%;
   height: 100%;
 }
@@ -202,8 +203,15 @@
   transform: translate(-50%, -50%);
   z-index: 1;
 }
-.fullscreen-wrapper .slider .slider-transition {
-  transition: transform 0.3s;
+.fullscreen-wrapper .slider .swipeable {
+  cursor: grab;
+}
+.fullscreen-wrapper .slider .slide.no-transition {
+  transition: none;
+}
+.fullscreen-wrapper .slider .grabbed {
+  transition: none;
+  cursor: grabbing;
 }
 .fullscreen-wrapper .hide-btn {
   display: none;

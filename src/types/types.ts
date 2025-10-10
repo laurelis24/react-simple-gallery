@@ -1,5 +1,8 @@
-export type Direction = 'left' | 'right' | 'set-position';
+import { RefObject } from 'react';
+import { SwipeDirections } from 'react-swipeable';
+
 export type GalleryLayout = 'flex' | 'masonry';
+export type MySwipeDirection = SwipeDirections | 'BasedOnIndex';
 
 export interface Rectangle {
   top: number;
@@ -10,8 +13,8 @@ export interface Rectangle {
 
 export interface MyState {
   pos: number;
-  direction: Direction;
+  direction: MySwipeDirection;
   imageCount: number;
 }
 
-export type MyAction = { direction: Direction; pos?: number };
+export type MyAction = { direction: MySwipeDirection; pos?: number; refIndex: RefObject<number> };

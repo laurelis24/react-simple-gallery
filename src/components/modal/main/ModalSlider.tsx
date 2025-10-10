@@ -1,7 +1,7 @@
-import { Children, useEffect, useRef } from 'react';
+import { Children, RefObject, useEffect, useRef } from 'react';
 import styles from '../../../style.module.css';
 import { SwipeEventData, useSwipeable } from 'react-swipeable';
-import { Direction, MyState } from '../../../types/types';
+import { MyState, MySwipeDirection } from '../../../types/types';
 import ChangeImageButton from '../../buttons/ChangeImageButton';
 import SliderImageContainer from './SliderImageContainer';
 import useImageGalleryContext from '../../../hooks/useImageGalleryContext';
@@ -9,94 +9,101 @@ import useAddKeyboard from '../../../hooks/useAddKeyboard';
 
 interface ModalSliderProps {
   state: MyState;
-  swipePosition: (direction: Direction, position?: number) => void;
+  refIndex: RefObject<number>;
+  swipePosition: (direction: MySwipeDirection, position?: number) => void;
+  setPosition: (direction: MySwipeDirection, position: number) => void;
 }
 
-export default function ModalSlider({ state, swipePosition }: ModalSliderProps) {
+export default function ModalSlider({ state, refIndex, swipePosition, setPosition }: ModalSliderProps) {
   const { children, arrowButtons, keyboard, swipeable, refSlide, imageCount, onClose } = useImageGalleryContext();
-  const options = { swipeThreshold: 70 };
-  const canSwipeRef = useRef<{ canSwipe: boolean; direction: Direction }>({ canSwipe: true, direction: 'left' });
+  const options = { swipeThreshold: 80 };
+  const refCanSwipe = useRef(true);
 
-  const slide = (dir: Direction, data: SwipeEventData) => {
-    if (!refSlide.current || !canSwipeRef.current.canSwipe) return;
-
-    refSlide.current.classList.add(styles['slider-transition']);
-
-    const base = state.pos * 100;
-
-    if (
-      (dir === 'left' && data.deltaX > -options.swipeThreshold) ||
-      (dir === 'right' && data.deltaX < options.swipeThreshold)
-    ) {
-      refSlide.current.classList.remove(styles['slider-transition']);
-      refSlide.current.style.transform = `translateX(calc(${-base}%)`;
+  const slide = (data: SwipeEventData) => {
+    const { dir, deltaX } = data;
+    refSlide.current?.classList.remove(styles['no-transition']);
+    refCanSwipe.current = false;
+    if (Math.abs(deltaX) < options.swipeThreshold) {
+      refSlide.current!.style.transform = `translateX(calc(${-(state.pos * 100)}%)`;
+      refCanSwipe.current = true;
       return;
     }
-
-    refSlide.current.style.transform = `translateX(calc(${-(base + (dir === 'left' ? 100 : -100))}%)`;
-
-    canSwipeRef.current.canSwipe = false;
-    canSwipeRef.current.direction = dir;
+    swipePosition(dir);
   };
 
   const slideAnimation = (data: SwipeEventData) => {
-    if (!refSlide.current || !canSwipeRef.current.canSwipe) return;
     const base = state.pos * 100;
-    refSlide.current.style.transform = `translate(calc(${-base}% + ${data.deltaX}px))`;
+    refSlide.current!.style.transform = `translate(calc(${-base}% + ${data.deltaX}px))`;
   };
 
-  useEffect(() => {
-    function removeTransition() {
-      if (!refSlide.current || canSwipeRef.current.canSwipe) return;
-
-      refSlide.current.classList.remove(styles['slider-transition']);
-      swipePosition(canSwipeRef.current.direction);
-      canSwipeRef.current.canSwipe = true;
-    }
-    refSlide.current?.addEventListener('transitionend', removeTransition);
-
-    return () => {
-      refSlide.current?.removeEventListener('transitionend', removeTransition);
-    };
-  }, [state.pos]);
-
   const handleSwiper = useSwipeable({
-    onSwipedLeft: (data) => slide('left', data),
-    onSwipedRight: (data) => slide('right', data),
-    onSwipedUp: () => onClose(state.pos - 1),
-    onSwipedDown: () => onClose(state.pos - 1),
-    onSwiping: (data) => slideAnimation(data),
-    onSwipeStart: () => {
-      refSlide.current?.classList.remove(styles['slider-transition']);
+    onSwipedUp: () => {
+      if (!refCanSwipe.current) return;
+      onClose(state.pos - 1);
+    },
+    onSwipedDown: () => {
+      if (!refCanSwipe.current) return;
+      onClose(state.pos - 1);
+    },
+    onSwiping: (data) => {
+      if (!refCanSwipe.current) return;
+      slideAnimation(data);
+    },
+    onSwiped: (data) => {
+      if (!refCanSwipe.current) return;
+      slide(data);
+    },
+    onTouchStartOrOnMouseDown: () => {
+      if (!refCanSwipe.current) return;
+      refSlide.current?.classList.add(styles['grabbed']);
+    },
+    onTouchEndOrOnMouseUp: () => {
+      refSlide.current?.classList.remove(styles['grabbed']);
+      refSlide.current?.classList.remove(styles['no-transition']);
     },
     trackTouch: true,
     trackMouse: true,
     preventScrollOnSwipe: true,
   });
 
-  const handleClick = (direction: Direction) => {
-    if (!refSlide.current || !canSwipeRef.current) return;
+  const handleClick = (direction: MySwipeDirection) => {
+    if (!refCanSwipe.current) return;
+    refCanSwipe.current = false;
+    refSlide.current?.classList.remove(styles['no-transition']);
     swipePosition(direction);
   };
 
-  if (keyboard) {
-    useAddKeyboard({ state, handleClick });
-  }
+  useAddKeyboard({ enabled: keyboard, state, handleClick });
+
+  const infiniteSwipeTransitionEnd = () => {
+    refCanSwipe.current = true;
+    if (refIndex.current <= 0) {
+      setPosition('BasedOnIndex', imageCount);
+    } else if (refIndex.current >= imageCount + 1) {
+      setPosition('BasedOnIndex', 1);
+    }
+  };
+
+  useEffect(() => {
+    refSlide.current?.addEventListener('transitionend', infiniteSwipeTransitionEnd);
+
+    return () => {
+      refSlide.current?.removeEventListener('transitionend', infiniteSwipeTransitionEnd);
+    };
+  }, []);
 
   return (
     <div className={styles['slider']}>
-      {arrowButtons && <ChangeImageButton handleButtonClick={() => handleClick('right')} direction="left" />}
+      {arrowButtons && <ChangeImageButton handleButtonClick={() => handleClick('Right')} direction="left" />}
 
       <div
         {...(swipeable ? handleSwiper : {})}
         ref={(el) => {
-          if (!refSlide) return;
-
           refSlide.current = el;
           if (swipeable && handleSwiper) handleSwiper.ref(el);
         }}
-        className={`${styles['slide']} ${styles['unselectable']}`}
-        style={{ transform: `translateX(-${state.pos * 100}%)`, cursor: swipeable ? 'grab' : 'default' }}
+        className={`${styles['slide']} ${styles['unselectable']} ${styles['swipeable']}`}
+        style={{ transform: `translateX(-${state.pos * 100}%)` }}
       >
         {imageCount > 1 && (
           <SliderImageContainer
@@ -104,13 +111,13 @@ export default function ModalSlider({ state, swipePosition }: ModalSliderProps) 
             alt={children[children.length - 1].props.alt}
           />
         )}
-        {Children.map(children, (child) => {
-          return <SliderImageContainer src={child.props.src} alt={child.props.alt} />;
+        {Children.map(children, (child, index) => {
+          return <SliderImageContainer key={index} src={child.props.src} alt={child.props.alt} />;
         })}
 
         {imageCount > 1 && <SliderImageContainer src={children[0].props.src} alt={children[0].props.alt} />}
       </div>
-      {arrowButtons && <ChangeImageButton handleButtonClick={() => handleClick('left')} direction="right" />}
+      {arrowButtons && <ChangeImageButton handleButtonClick={() => handleClick('Left')} direction="right" />}
     </div>
   );
 }

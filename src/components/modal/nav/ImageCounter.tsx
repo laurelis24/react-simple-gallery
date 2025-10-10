@@ -6,10 +6,9 @@ interface ImageCounterProps {
 }
 export default function ImageCounter({ imagePosition }: ImageCounterProps) {
   const { imageCount } = useImageGalleryContext();
-
   return (
     <span className={styles['image-counter']}>
-      {imagePosition} / {imageCount}
+      {imagePosition <= 0 ? 1 : imagePosition > imageCount ? 1 : imagePosition} / {imageCount}
     </span>
   );
 }
