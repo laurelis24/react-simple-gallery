@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+body.scroll-lock {
+  overflow: hidden;
+}
+
 .gallery {
   gap: 5px;
   animation: showup 0.5s linear 0s forwards;
@@ -64,6 +68,7 @@
   opacity: 1;
   z-index: 5;
   transition: all 0.4s;
+  will-change: transform, opacity;
   border-radius: 5px;
 }
 
@@ -73,6 +78,7 @@
   flex-direction: column;
   z-index: 9999;
   animation: fade 0.4s linear 0s forwards;
+  transition: background-color 0.5s;
   inset: 0;
   background: rgba(0, 0, 0, 0.95);
   width: 100%;
@@ -86,43 +92,33 @@
   background-color: rgba(0, 0, 0, 0.55);
   padding: 8px;
   width: 100%;
-}
-.fullscreen-wrapper .nav-container .left-container .image-counter {
-  opacity: 0.5;
-  color: white;
+  color: rgba(255, 255, 255, 0.5);
 }
 .fullscreen-wrapper .nav-container .right-container {
   display: flex;
   align-items: center;
 }
-.fullscreen-wrapper .nav-container .right-container .exit-btn,
-.fullscreen-wrapper .nav-container .right-container .fullscreen-btn {
-  opacity: 0.6;
+.fullscreen-wrapper .nav-container .right-container button {
+  transition:
+    color 0.2s,
+    stroke-width 0.2s;
   cursor: pointer;
   border: none;
-  background-color: transparent;
-  width: 35px;
-  height: 35px;
-  color: white;
+  background: transparent;
+  width: calc(35px + 0.5vw);
+  height: calc(35px + 0.5vw);
+  color: rgba(255, 255, 255, 0.5);
 }
-.fullscreen-wrapper .nav-container .right-container .exit-btn svg,
-.fullscreen-wrapper .nav-container .right-container .fullscreen-btn svg {
+.fullscreen-wrapper .nav-container .right-container button svg {
   width: 100%;
   height: 100%;
   stroke-width: 1;
-  transition: stroke-width 0.2s;
 }
-.fullscreen-wrapper .nav-container .right-container .exit-btn:hover,
-.fullscreen-wrapper .nav-container .right-container .fullscreen-btn:hover {
-  opacity: 0.8;
+.fullscreen-wrapper .nav-container .right-container button:hover {
+  color: rgba(255, 255, 255, 0.9);
 }
-.fullscreen-wrapper .nav-container .right-container .exit-btn:hover svg,
-.fullscreen-wrapper .nav-container .right-container .fullscreen-btn:hover svg {
-  stroke-width: 2;
-}
-.fullscreen-wrapper .nav-container .right-container .exit-btn {
-  width: 40px;
-  height: 40px;
+.fullscreen-wrapper .nav-container .right-container button:hover svg {
+  stroke-width: 1.5;
 }
 .fullscreen-wrapper .slider {
   display: flex;
@@ -217,6 +213,7 @@
   display: none;
 }
 .fullscreen-wrapper .thumbnail-footer-container {
+  animation: fade 0.5s forwards;
   height: calc(60px + 1vw);
 }
 .fullscreen-wrapper .thumbnail-footer-container .thumbnail-footer {
@@ -252,6 +249,15 @@
 .fullscreen-wrapper .thumbnail-footer-container .thumbnail-footer .thumbnail-slider div.selected {
   animation: fade 0.7s forwards;
   border: solid 1px white;
+}
+
+.fullscreen-wrapper::-webkit-scrollbar {
+  display: none;
+  overflow: hidden;
+}
+
+.fullscreen-wrapper.light-mode {
+  background: rgba(251, 250, 250, 0.95);
 }
 
 .unselectable * {

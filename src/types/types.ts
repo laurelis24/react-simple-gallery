@@ -1,6 +1,7 @@
 import { RefObject } from 'react';
 import { SwipeDirections } from 'react-swipeable';
 
+export type Theme = 'dark' | 'light';
 export type GalleryLayout = 'flex' | 'masonry';
 export type MySwipeDirection = SwipeDirections | 'BasedOnIndex';
 

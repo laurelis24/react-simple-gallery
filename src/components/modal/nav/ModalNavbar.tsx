@@ -1,25 +1,45 @@
 import useImageGalleryContext from '../../../hooks/useImageGalleryContext';
 import styles from '../../../style.module.css';
-import { MyState } from '../../../types/types';
+import { Theme } from '../../../types/types';
 import ExitButton from '../../buttons/ExitButton';
 import FullScreenButton from '../../buttons/FullScreenButton';
+import ThemeButton from '../../buttons/ThemeButton';
+import ThumbnailNavigationButton from '../../buttons/ThumnailNavigationButton';
 import ImageCounter from './ImageCounter';
 
 interface ModalNavbarProps {
-  state: MyState;
   refSlider: React.RefObject<HTMLDivElement | null>;
+  position: number;
+  isThumbnailNavigation: boolean;
+  theme: Theme;
+  onToggleTheme: () => void;
+  onToggleThumbnailNavigation: (value: boolean) => void;
 }
 
-export default function ModalNavbar({ state, refSlider }: ModalNavbarProps) {
-  const { fullScreenButton, sliderIndex, onClose } = useImageGalleryContext();
+function ModalNavbar({
+  refSlider,
+  position,
+  isThumbnailNavigation,
+  theme,
+  onToggleTheme,
+  onToggleThumbnailNavigation,
+}: ModalNavbarProps) {
+  const { fullScreenButton, sliderThumbnail, sliderTheme, sliderIndex, onClose } = useImageGalleryContext();
 
+  const handleToggleThumbnailNavigation = () => {
+    onToggleThumbnailNavigation(!isThumbnailNavigation);
+  };
   return (
     <div className={styles['nav-container']}>
-      <div className={styles['left-container']}>{sliderIndex && <ImageCounter imagePosition={state.pos} />}</div>
+      <div className={styles['left-container']}>{sliderIndex && <ImageCounter imagePosition={position} />}</div>
       <div className={styles['right-container']}>
-        {fullScreenButton && <FullScreenButton refSlide={refSlider} />}
-        <ExitButton handleClose={() => onClose(state.pos - 1)} />
+        {fullScreenButton && <FullScreenButton refSlider={refSlider} />}
+        {sliderThumbnail && <ThumbnailNavigationButton onToggleThumbnailNavigation={handleToggleThumbnailNavigation} />}
+        {sliderTheme && <ThemeButton theme={theme} onToggleTheme={onToggleTheme} />}
+        <ExitButton handleClose={() => onClose(position - 1)} />
       </div>
     </div>
   );
 }
+
+export default ModalNavbar;

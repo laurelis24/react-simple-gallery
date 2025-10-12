@@ -1,4 +1,4 @@
-import { useRef, useReducer } from 'react';
+import { useRef, useReducer, useState } from 'react';
 import reducer from '../../../functions/reducer';
 import styles from '../../../style.module.css';
 import ThumbnailNavigation from '../footer/ModalThumbnailFooter';
@@ -6,16 +6,19 @@ import Slider from './ModalSlider';
 import useImageGalleryContext from '../../../hooks/useImageGalleryContext';
 import ModalNavbar from '../nav/ModalNavbar';
 import { MySwipeDirection } from '../../../types/types';
+import useTheme from '../../../hooks/useTheme';
 
-export function ModalImageGallery() {
-  const { imageCount, imageIndex, sliderThumbnail, refSlide } = useImageGalleryContext();
+export default function ModalImageGallery() {
+  const { imageCount, imageIndex, sliderTheme, refSlide } = useImageGalleryContext();
+  const [theme, toggleTheme] = useTheme();
+  const [isThumbnailNavigation, setIsThumbnailNavigation] = useState(true);
   const refSlider = useRef<HTMLDivElement>(null);
+
   const [state, dispatch] = useReducer(reducer, {
     pos: (imageIndex || 0) + 1,
     direction: 'Right',
     imageCount: imageCount,
   });
-
   const refIndex = useRef(state.pos);
 
   const handleSwipePosition = (direction: MySwipeDirection, position?: number) => {
@@ -28,10 +31,20 @@ export function ModalImageGallery() {
   };
 
   return (
-    <div ref={refSlider} className={styles['fullscreen-wrapper']}>
-      <ModalNavbar state={state} refSlider={refSlider} />
+    <div
+      ref={refSlider}
+      className={`${styles['fullscreen-wrapper']} ${theme === 'dark' ? styles['dark-mode'] : styles['light-mode']}`}
+    >
+      <ModalNavbar
+        refSlider={refSlider}
+        position={state.pos}
+        isThumbnailNavigation={isThumbnailNavigation}
+        onToggleThumbnailNavigation={setIsThumbnailNavigation}
+        onToggleTheme={toggleTheme}
+        theme={theme}
+      />
       <Slider refIndex={refIndex} state={state} swipePosition={handleSwipePosition} setPosition={handleSetPosition} />
-      {sliderThumbnail && <ThumbnailNavigation setPosition={handleSetPosition} state={state} />}
+      {isThumbnailNavigation && <ThumbnailNavigation setPosition={handleSetPosition} state={state} />}
     </div>
   );
 }

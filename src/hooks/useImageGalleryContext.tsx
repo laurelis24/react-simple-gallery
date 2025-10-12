@@ -16,8 +16,9 @@ export default function useImageGalleryContext() {
     refSlide: context.refSlide,
     keyboard: context.keyboard || false,
     fullScreenButton: context.fullScreenButton,
-    sliderThumbnail: context.sliderThumbnail,
+    sliderThumbnail: context.sliderThumbnail || false,
     sliderIndex: context.sliderIndex,
+    sliderTheme: context.sliderTheme,
     onClose: context.onClose,
   };
 }

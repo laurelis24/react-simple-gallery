@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+body.scroll-lock {
+  overflow: hidden;
+}
+
 .gallery {
   gap: 5px;
   animation: showup 0.5s linear 0s forwards;
@@ -68,6 +72,7 @@
   opacity: 1;
   z-index: 5;
   transition: all 0.4s;
+  will-change: transform, opacity;
   border-radius: 5px;
 }
 
@@ -77,6 +82,7 @@
   flex-direction: column;
   z-index: 9999;
   animation: fade 0.4s linear 0s forwards;
+  transition: background-color 0.5s;
   inset: 0;
   background: rgba(0, 0, 0, 0.95);
   width: 100%;
@@ -91,44 +97,34 @@
     background-color: rgba(0, 0, 0, 0.55);
     padding: 8px;
     width: 100%;
-
-    .left-container {
-      .image-counter {
-        opacity: 0.5;
-        color: white;
-      }
-    }
+    color: rgba(255, 255, 255, 0.5);
 
     .right-container {
       display: flex;
       align-items: center;
-      .exit-btn,
-      .fullscreen-btn {
-        opacity: 0.6;
+      button {
+        transition:
+          color 0.2s,
+          stroke-width 0.2s;
+
         cursor: pointer;
         border: none;
-        background-color: transparent;
-        width: 35px;
-        height: 35px;
-        color: white;
-
+        background: transparent;
+        width: calc(35px + 0.5vw);
+        height: calc(35px + 0.5vw);
+        color: rgba(255, 255, 255, 0.5);
         svg {
           width: 100%;
           height: 100%;
           stroke-width: 1;
-          transition: stroke-width 0.2s;
         }
 
         &:hover {
-          opacity: 0.8;
+          color: rgba(255, 255, 255, 0.9);
           svg {
-            stroke-width: 2;
+            stroke-width: 1.5;
           }
         }
-      }
-      .exit-btn {
-        width: 40px;
-        height: 40px;
       }
     }
   }
@@ -236,6 +232,7 @@
 
   // Modal footer
   .thumbnail-footer-container {
+    animation: fade 0.5s forwards;
     height: calc(60px + 1vw);
     .thumbnail-footer {
       position: relative;
@@ -274,6 +271,15 @@
       }
     }
   }
+}
+
+.fullscreen-wrapper::-webkit-scrollbar {
+  display: none;
+  overflow: hidden;
+}
+
+.fullscreen-wrapper.light-mode {
+  background: rgba(251, 250, 250, 0.95);
 }
 
 .unselectable * {

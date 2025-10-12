@@ -1,8 +1,8 @@
-import { Direction } from '../../types/types';
+import { MySwipeDirection } from '../../types/types';
 import styles from '../../style.module.css';
 interface ChangeImageButtonProps {
   handleButtonClick: () => void;
-  direction: Direction;
+  direction: MySwipeDirection;
 }
 
 export default function ChangeImageButton({ handleButtonClick, direction }: ChangeImageButtonProps) {
@@ -12,10 +12,10 @@ export default function ChangeImageButton({ handleButtonClick, direction }: Chan
         e.stopPropagation();
         handleButtonClick();
       }}
-      className={`${direction === 'left' ? styles['left-btn'] : styles['right-btn']}`}
-      title={direction === 'left' ? 'Previous image' : 'Next image'}
+      className={`${direction === 'Left' ? styles['left-btn'] : styles['right-btn']}`}
+      title={direction === 'Left' ? 'Previous image' : 'Next image'}
     >
-      {direction === 'left' ? (
+      {direction === 'Left' ? (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
         </svg>

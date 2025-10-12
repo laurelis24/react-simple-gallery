@@ -1,10 +1,11 @@
-import { Children, cloneElement, isValidElement, ReactElement, useRef, useState } from 'react';
+import { Children, cloneElement, isValidElement, ReactElement, useEffect, useRef, useState } from 'react';
 import { ImageProps } from './Image';
 import AnimatedImageClone from './modal/main/AnimatedImageClone';
 import { GalleryLayout, Rectangle } from '../types/types';
 import styles from '../style.module.css';
-import { ModalImageGallery } from './modal/main/ModalImageGallery';
+import ModalImageGallery from './modal/main/ModalImageGallery';
 import { ImageGalleryContext } from '../context/ImageGalleryContext';
+import useScrollLock from '../hooks/useScrollLock';
 
 export interface ImageGalleryProps {
   children: ReactElement<ImageProps>[];
@@ -16,7 +17,9 @@ export interface ImageGalleryProps {
   showImageCount?: number;
   sliderThumbnail?: boolean;
   sliderIndex?: boolean;
+  sliderTheme?: boolean;
   layout: GalleryLayout;
+  galleryImageAnimation: boolean;
   className?: string;
 }
 
@@ -36,41 +39,65 @@ export default function ImageGallery({
   showImageCount = Infinity,
   sliderThumbnail = true,
   sliderIndex = true,
+  sliderTheme = true,
   layout = 'masonry',
+  galleryImageAnimation = true,
   className = '',
 }: ImageGalleryProps) {
   const [imageIndex, setImageIndex] = useState<number | null>(null);
   const refGallery = useRef<HTMLDivElement>(null);
   const refSlide = useRef<HTMLDivElement>(null);
-  const refAnimatedImage = useRef<HTMLImageElement>(null);
   const imageCount = Children.count(children);
 
+  const refIsAnimating = useRef(false);
+  const refAnimationTimeout = useRef<NodeJS.Timeout | null>(null);
+  const animationDuration = 350;
+
+  const refAnimatedImage = useRef<HTMLImageElement>(null);
   const [animatedImage, setAnimatedImage] = useState<AnimatedImage | null>(null);
 
+  useScrollLock(imageIndex !== null ? true : false, animationDuration);
+
+  useEffect(() => {
+    return () => {
+      if (refAnimationTimeout.current) {
+        clearTimeout(refAnimationTimeout.current);
+      }
+    };
+  }, []);
+
   const openModal = (idx: number) => {
+    if (refIsAnimating.current) return;
+    refIsAnimating.current = true;
     setImageIndex(idx);
     requestAnimationFrame(() => {
       const [image, modalImage] = imageAndModalImage(idx);
-      setAnimatedImage({
-        src: image.src,
-        startRect: image.getBoundingClientRect(),
-        endRect: modalImage.getBoundingClientRect(),
-      });
+      if (galleryImageAnimation) {
+        setAnimatedImage({
+          src: image.src,
+          startRect: image.getBoundingClientRect(),
+          endRect: modalImage.getBoundingClientRect(),
+        });
+      }
     });
+
+    setAnimationTimeout();
   };
 
   const closeModal = (idx: number) => {
-    const [image, modalImage] = imageAndModalImage(idx);
+    if (refIsAnimating.current) return;
+    refIsAnimating.current = true;
 
-    if (showImageCount - 1 >= idx) {
+    if (showImageCount - 1 >= idx && galleryImageAnimation) {
+      const [image, modalImage] = imageAndModalImage(idx);
       setAnimatedImage({
         src: image.src,
         startRect: modalImage.getBoundingClientRect(),
         endRect: image.getBoundingClientRect(),
       });
     }
-
     requestAnimationFrame(() => setImageIndex(null));
+    setAnimationTimeout();
   };
 
   const imageAndModalImage = (idx: number): HTMLImageElement[] => {
@@ -79,6 +106,13 @@ export default function ImageGallery({
       ?.firstElementChild as HTMLImageElement;
 
     return [image, modalImage];
+  };
+
+  const setAnimationTimeout = () => {
+    refAnimationTimeout.current = setTimeout(() => {
+      refIsAnimating.current = false;
+      refAnimationTimeout.current = null;
+    }, animationDuration);
   };
 
   if (children.length < 2) {
@@ -98,7 +132,9 @@ export default function ImageGallery({
         fullScreenButton: fullScreenButton,
         sliderThumbnail: sliderThumbnail,
         sliderIndex: sliderIndex,
+        sliderTheme: sliderTheme,
         layout: layout,
+        galleryImageAnimation,
         onClose: closeModal,
       }}
     >
@@ -117,7 +153,7 @@ export default function ImageGallery({
         )}
       </div>
 
-      {animatedImage !== null && (
+      {galleryImageAnimation && animatedImage !== null && (
         <AnimatedImageClone
           refAnimatedImage={refAnimatedImage}
           src={animatedImage.src}

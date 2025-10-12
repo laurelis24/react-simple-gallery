@@ -20,9 +20,11 @@ export default function ModalSlider({ state, refIndex, swipePosition, setPositio
   const refCanSwipe = useRef(true);
 
   const slide = (data: SwipeEventData) => {
-    const { dir, deltaX } = data;
-    refSlide.current?.classList.remove(styles['no-transition']);
+    if (!refCanSwipe.current) return;
     refCanSwipe.current = false;
+    const { dir, deltaX } = data;
+
+    refSlide.current?.classList.remove(styles['no-transition']);
     if (Math.abs(deltaX) < options.swipeThreshold) {
       refSlide.current!.style.transform = `translateX(calc(${-(state.pos * 100)}%)`;
       refCanSwipe.current = true;
@@ -76,12 +78,13 @@ export default function ModalSlider({ state, refIndex, swipePosition, setPositio
   useAddKeyboard({ enabled: keyboard, state, handleClick });
 
   const infiniteSwipeTransitionEnd = () => {
-    refCanSwipe.current = true;
     if (refIndex.current <= 0) {
       setPosition('BasedOnIndex', imageCount);
     } else if (refIndex.current >= imageCount + 1) {
       setPosition('BasedOnIndex', 1);
     }
+
+    refCanSwipe.current = true;
   };
 
   useEffect(() => {
@@ -94,7 +97,7 @@ export default function ModalSlider({ state, refIndex, swipePosition, setPositio
 
   return (
     <div className={styles['slider']}>
-      {arrowButtons && <ChangeImageButton handleButtonClick={() => handleClick('Right')} direction="left" />}
+      {arrowButtons && <ChangeImageButton handleButtonClick={() => handleClick('Right')} direction="Left" />}
 
       <div
         {...(swipeable ? handleSwiper : {})}
@@ -117,7 +120,7 @@ export default function ModalSlider({ state, refIndex, swipePosition, setPositio
 
         {imageCount > 1 && <SliderImageContainer src={children[0].props.src} alt={children[0].props.alt} />}
       </div>
-      {arrowButtons && <ChangeImageButton handleButtonClick={() => handleClick('Left')} direction="right" />}
+      {arrowButtons && <ChangeImageButton handleButtonClick={() => handleClick('Left')} direction="Right" />}
     </div>
   );
 }
