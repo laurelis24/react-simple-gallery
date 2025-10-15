@@ -18,8 +18,8 @@ export interface ImageGalleryProps {
   sliderThumbnail?: boolean;
   sliderIndex?: boolean;
   sliderTheme?: boolean;
-  layout: GalleryLayout;
-  galleryImageAnimation: boolean;
+  layout?: GalleryLayout;
+  galleryImageAnimation?: boolean;
   className?: string;
 }
 
@@ -134,7 +134,7 @@ export default function ImageGallery({
         sliderIndex: sliderIndex,
         sliderTheme: sliderTheme,
         layout: layout,
-        galleryImageAnimation,
+        galleryImageAnimation: galleryImageAnimation,
         onClose: closeModal,
       }}
     >

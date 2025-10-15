@@ -24,24 +24,42 @@ npm install -D @laurelis/react-simple-gallery
 
 ## Usage
 
+- Example using a free public API (cat images) to demonstrate a dynamic gallery with images of different sizes.
+- Copy/paste usage example
+
 ```tsx
 import ImageGallery, { Image } from '@laurelis/react-simple-gallery';
-
-const images = [
-  { id: 1, title: "Image-1" src: '/images/photo1.jpg' },
-  { id: 2, title: "Image-2", src: '/images/photo2.jpg' },
-  { id: 3, title: "Image-3", src: '/images/photo3.jpg' },
-];
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [images, setImages] = useState<{ id: string; url: string }[] | null>(null);
+
+  useEffect(() => {
+    const fetchCatImages = async () => {
+      try {
+        const reponse = await fetch('https://api.thecatapi.com/v1/images/search?limit=10');
+        const data = await reponse.json();
+        setImages(data);
+      } catch (error) {}
+    };
+
+    fetchCatImages();
+  }, []);
   return (
-    <ImageGallery lazyLoading={true} keyboard={true} className={'your-class'}>
-      {images.map((image) => (
-        // Now you can add own style to images
-        <Image key={image.id} src={image.src} alt={image.title} className={'your-class'} />
-      ))}
-    </ImageGallery>
+    <main>
+      {(images && (
+        <ImageGallery swipeable={true}>
+          {images.map((image) => {
+            return <Image key={image.id} src={image.url} />;
+          })}
+        </ImageGallery>
+      )) || <Loader />}
+    </main>
   );
+}
+
+function Loader() {
+  return <h1>Loading gallery...</h1>;
 }
 ```
 

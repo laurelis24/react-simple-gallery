@@ -7,8 +7,10 @@ interface ImageCounterProps {
 export default function ImageCounter({ imagePosition }: ImageCounterProps) {
   const { imageCount } = useImageGalleryContext();
   return (
-    <span className={styles['image-counter']}>
-      {imagePosition <= 0 ? 1 : imagePosition > imageCount ? 1 : imagePosition} / {imageCount}
-    </span>
+    <div className={styles['image-position']}>
+      <span className={styles['current']}>{Math.min(Math.max(imagePosition, 1), imageCount)}</span>
+      <span className={styles['divider']}>/</span>
+      <span className={styles['total']}>{imageCount}</span>
+    </div>
   );
 }

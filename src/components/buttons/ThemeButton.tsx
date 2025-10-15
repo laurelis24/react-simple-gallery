@@ -6,7 +6,7 @@ interface ThemeButtonProps {
 }
 export default function ThemeButton({ theme, onToggleTheme }: ThemeButtonProps) {
   return (
-    <button title="Toggle full-screen mode" onClick={onToggleTheme}>
+    <button title="Toggle dark/ligh mode" onClick={onToggleTheme}>
       {theme === 'dark' ? (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path

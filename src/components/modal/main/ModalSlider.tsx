@@ -57,11 +57,10 @@ export default function ModalSlider({ state, refIndex, swipePosition, setPositio
     },
     onTouchStartOrOnMouseDown: () => {
       if (!refCanSwipe.current) return;
-      refSlide.current?.classList.add(styles['grabbed']);
+      refSlide.current?.classList.add(styles['grabbed'], styles['no-transition']);
     },
     onTouchEndOrOnMouseUp: () => {
-      refSlide.current?.classList.remove(styles['grabbed']);
-      refSlide.current?.classList.remove(styles['no-transition']);
+      refSlide.current?.classList.remove(styles['grabbed'], styles['no-transition']);
     },
     trackTouch: true,
     trackMouse: true,
