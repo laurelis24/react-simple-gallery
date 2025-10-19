@@ -18,7 +18,7 @@ export default function ModalSlider({ state, refIndex, swipePosition, setPositio
   const { children, arrowButtons, keyboard, swipeable, refSlide, imageCount, onClose } = useImageGalleryContext();
   const options = { swipeThreshold: 80 };
   const refCanSwipe = useRef(true);
-
+  
   const slide = (data: SwipeEventData) => {
     if (!refCanSwipe.current) return;
     refCanSwipe.current = false;
@@ -102,7 +102,7 @@ export default function ModalSlider({ state, refIndex, swipePosition, setPositio
           refSlide.current = el;
           if (swipeable && handleSwiper) handleSwiper.ref(el);
         }}
-        className={`${styles['slide']} ${styles['unselectable']} ${styles['swipeable']}`}
+        className={`${styles['slide']} ${styles['unselectable']} ${swipeable ? styles["swipeable"] : ""}`}
         style={{ transform: `translateX(-${state.pos * 100}%)` }}
       >
         {imageCount > 1 && (
