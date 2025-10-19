@@ -258,7 +258,7 @@ body.scroll-lock {
     .thumbnail-footer {
       position: relative;
       margin: auto;
-      width: 70%;
+      width: 100%;
       height: 100%;
       overflow: hidden;
       .thumbnail-slider {
@@ -268,7 +268,7 @@ body.scroll-lock {
         height: 100%;
         div {
           flex: 0 0 auto;
-          opacity: 0.5;
+          opacity: 0.4;
           cursor: pointer;
           border: solid 1px transparent;
           border-radius: 3px;
@@ -287,7 +287,7 @@ body.scroll-lock {
 
         div.selected {
           animation: fade 0.7s forwards;
-          border: solid 1px white;
+          //  border: solid 1px rgba(255, 255, 255, 0.5);
         }
       }
     }
@@ -302,10 +302,22 @@ body.scroll-lock {
 .fullscreen-wrapper.dark-mode {
   background-color: rgba(0, 0, 0, 0.95);
   color: white;
+
+  .thumbnail-slider {
+    div.selected {
+      border: solid 1px rgba(255, 255, 255, 0.5);
+    }
+  }
 }
 .fullscreen-wrapper.light-mode {
   background: rgba(251, 250, 250, 0.95);
   color: black;
+
+  .thumbnail-slider {
+    div.selected {
+      border: solid 1px #6c6c6c;
+    }
+  }
 }
 
 .unselectable * {
@@ -342,14 +354,6 @@ body.scroll-lock {
     .item {
       flex: 1 1 calc(33.3% - 5px);
       max-width: calc(33.3% - 10px);
-    }
-  }
-
-  .fullscreen-wrapper {
-    .thumbnail-footer-container {
-      .thumbnail-footer {
-        width: 100%;
-      }
     }
   }
 }

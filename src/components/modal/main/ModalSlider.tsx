@@ -40,11 +40,9 @@ export default function ModalSlider({ state, refIndex, swipePosition, setPositio
 
   const handleSwiper = useSwipeable({
     onSwipedUp: () => {
-      if (!refCanSwipe.current) return;
       onClose(state.pos - 1);
     },
     onSwipedDown: () => {
-      if (!refCanSwipe.current) return;
       onClose(state.pos - 1);
     },
     onSwiping: (data) => {

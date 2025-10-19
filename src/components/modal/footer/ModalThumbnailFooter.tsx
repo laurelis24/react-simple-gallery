@@ -3,6 +3,7 @@ import styles from '../../../style.module.css';
 import { SwipeEventData, useSwipeable } from 'react-swipeable';
 import { MyState, MySwipeDirection } from '../../../types/types';
 import useImageGalleryContext from '../../../hooks/useImageGalleryContext';
+import debounce from '../../../functions/debounce';
 
 interface ModalThumbnailProps {
   state: MyState;
@@ -111,6 +112,19 @@ export default function ModalThumbnailFooter({ state, setPosition }: ModalThumbn
   useEffect(() => {
     scrollToIndex(state.pos - 1);
   }, [state.pos]);
+
+  useEffect(() => {
+    const debouncedResize = debounce(() => {
+      refThumbnailSlider.current!.style.transform = 'translateX(0px)';
+      scrollToIndex(state.pos - 1);
+    }, 500);
+
+    window.addEventListener('resize', debouncedResize);
+
+    return () => {
+      window.removeEventListener('resize', debouncedResize);
+    };
+  }, []);
 
   const startMomentum = () => {
     const slider = refThumbnailSlider.current;

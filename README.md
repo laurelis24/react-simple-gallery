@@ -71,7 +71,7 @@ function Loader() {
 | `fullScreenButton`      | `boolean` | `true`     | Show or hide full screen button                                                        |
 | `sliderThumbnail`       | `boolean` | `true`     | Show or hide sliders image thumbnail navigation button                                 |
 | `sliderIndex`           | `boolean` | `true`     | Show or hide sliders image index/position                                              |
-| `sliderIndex`           | `boolean` | `true`     | Show or hide sliders light/dark mode button                                            |
+| `sliderTheme`           | `boolean` | `true`     | Show or hide sliders light/dark mode button                                            |
 | `showImageCount`        | `number`  | `Infinity` | Specifies the number of images initially displayed in the gallery (min-1)              |
 | `layout`                | `string`  | `masonry`  | Gallery layout type - "masonry" and "flex"                                             |
 | `lazyLoading`           | `boolean` | `true`     | Enable lazy loading of whole gallery (HTML lazy loading)                               |
