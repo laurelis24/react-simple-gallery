@@ -63,20 +63,21 @@ function Loader() {
 }
 ```
 
-| Prop                    | Type      | Default    | Description                                                                            |
-| ----------------------- | --------- | ---------- | -------------------------------------------------------------------------------------- |
-| `keyboard`              | `boolean` | `true`     | Enable keyboard navigation (LEFT, RIGHT, ESC)                                          |
-| `arrowButtons`          | `boolean` | `true`     | Show or hide arrow key buttons                                                         |
-| `swipeable`             | `boolean` | `true`     | Enable swipe on/off (mobile and pc)                                                    |
-| `fullScreenButton`      | `boolean` | `true`     | Show or hide full screen button                                                        |
-| `sliderThumbnail`       | `boolean` | `true`     | Show or hide sliders image thumbnail navigation button                                 |
-| `sliderIndex`           | `boolean` | `true`     | Show or hide sliders image index/position                                              |
-| `sliderTheme`           | `boolean` | `true`     | Show or hide sliders light/dark mode button                                            |
-| `showImageCount`        | `number`  | `Infinity` | Specifies the number of images initially displayed in the gallery (min-1)              |
-| `layout`                | `string`  | `masonry`  | Gallery layout type - "masonry" and "flex"                                             |
-| `lazyLoading`           | `boolean` | `true`     | Enable lazy loading of whole gallery (HTML lazy loading)                               |
-| `galleryImageAnimation` | `boolean` | `true`     | Enables or disables image animation when clicking the gallery (may impact performance) |
-| `className`             | `string`  | —          | Optional CSS class for custom styling                                                  |
+| Prop                      | Type      | Default    | Description                                                                            |
+| ------------------------- | --------- | ---------- | -------------------------------------------------------------------------------------- |
+| `keyboard`                | `boolean` | `true`     | Enable keyboard navigation (LEFT, RIGHT, ESC)                                          |
+| `arrowButtons`            | `boolean` | `true`     | Show or hide arrow key buttons                                                         |
+| `swipeable`               | `boolean` | `true`     | Enable swipe on/off (mobile and pc)                                                    |
+| `fullScreenButton`        | `boolean` | `true`     | Show or hide full screen button                                                        |
+| `sliderThumbnail`         | `boolean` | `true`     | Show or hide sliders image thumbnail navigation button                                 |
+| `sliderIndex`             | `boolean` | `true`     | Show or hide sliders image index/position                                              |
+| `sliderTheme`             | `boolean` | `true`     | Show or hide sliders light/dark mode button                                            |
+| `showImageCount`          | `number`  | `Infinity` | Specifies the number of images initially displayed in the gallery (min-1)              |
+| `sliderAnimationDuration` | `number`  | `300`      | Slider animation duration                                                              |
+| `layout`                  | `string`  | `masonry`  | Gallery layout type - "masonry" and "flex"                                             |
+| `lazyLoading`             | `boolean` | `true`     | Enable lazy loading of whole gallery (HTML lazy loading)                               |
+| `galleryImageAnimation`   | `boolean` | `true`     | Enables or disables image animation when clicking the gallery (may impact performance) |
+| `className`               | `string`  | —          | Optional CSS class for custom styling                                                  |
 
 ## Performance
 

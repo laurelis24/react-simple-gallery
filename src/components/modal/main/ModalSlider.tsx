@@ -1,4 +1,4 @@
-import { Children, RefObject, useEffect, useRef } from 'react';
+import { RefObject, useEffect } from 'react';
 import styles from '../../../style.module.css';
 import { SwipeEventData, useSwipeable } from 'react-swipeable';
 import { MyState, MySwipeDirection } from '../../../types/types';
@@ -10,26 +10,25 @@ import useAddKeyboard from '../../../hooks/useAddKeyboard';
 interface ModalSliderProps {
   state: MyState;
   refIndex: RefObject<number>;
+  refCanSwipe: RefObject<boolean>;
   swipePosition: (direction: MySwipeDirection, position?: number) => void;
   setPosition: (direction: MySwipeDirection, position: number) => void;
 }
 
-export default function ModalSlider({ state, refIndex, swipePosition, setPosition }: ModalSliderProps) {
-  const { children, arrowButtons, keyboard, swipeable, refSlide, imageCount, onClose } = useImageGalleryContext();
+export default function ModalSlider({ state, refIndex, refCanSwipe, swipePosition, setPosition }: ModalSliderProps) {
+  const { children, arrowButtons, keyboard, swipeable, refSlide, imageCount, sliderAnimationDuration, onClose } =
+    useImageGalleryContext();
+  const sliderImages = [children[children.length - 1], ...children, children[0]];
   const options = { swipeThreshold: 80 };
-  const refCanSwipe = useRef(true);
-  
   const slide = (data: SwipeEventData) => {
-    if (!refCanSwipe.current) return;
     refCanSwipe.current = false;
     const { dir, deltaX } = data;
-
-    refSlide.current?.classList.remove(styles['no-transition']);
     if (Math.abs(deltaX) < options.swipeThreshold) {
       refSlide.current!.style.transform = `translateX(calc(${-(state.pos * 100)}%)`;
-      refCanSwipe.current = true;
       return;
     }
+
+    refCanSwipe.current = false;
     swipePosition(dir);
   };
 
@@ -80,7 +79,6 @@ export default function ModalSlider({ state, refIndex, swipePosition, setPositio
     } else if (refIndex.current >= imageCount + 1) {
       setPosition('BasedOnIndex', 1);
     }
-
     refCanSwipe.current = true;
   };
 
@@ -102,20 +100,12 @@ export default function ModalSlider({ state, refIndex, swipePosition, setPositio
           refSlide.current = el;
           if (swipeable && handleSwiper) handleSwiper.ref(el);
         }}
-        className={`${styles['slide']} ${styles['unselectable']} ${swipeable ? styles["swipeable"] : ""}`}
-        style={{ transform: `translateX(-${state.pos * 100}%)` }}
+        className={`${styles['slide']} ${styles['unselectable']} ${swipeable ? styles['swipeable'] : ''}`}
+        style={{ transform: `translateX(-${state.pos * 100}%)`, transitionDuration: `${sliderAnimationDuration}ms` }}
       >
-        {imageCount > 1 && (
-          <SliderImageContainer
-            src={children[children.length - 1].props.src}
-            alt={children[children.length - 1].props.alt}
-          />
-        )}
-        {Children.map(children, (child, index) => {
-          return <SliderImageContainer key={index} src={child.props.src} alt={child.props.alt} />;
-        })}
-
-        {imageCount > 1 && <SliderImageContainer src={children[0].props.src} alt={children[0].props.alt} />}
+        {sliderImages.map((image, idx) => (
+          <SliderImageContainer key={idx} src={image.props.src} alt={image.props.alt} />
+        ))}
       </div>
       {arrowButtons && <ChangeImageButton handleButtonClick={() => handleClick('Left')} direction="Right" />}
     </div>

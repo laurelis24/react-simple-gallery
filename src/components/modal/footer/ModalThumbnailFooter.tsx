@@ -1,4 +1,4 @@
-import { Children, useEffect, useRef } from 'react';
+import { Children, RefObject, useEffect, useRef } from 'react';
 import styles from '../../../style.module.css';
 import { SwipeEventData, useSwipeable } from 'react-swipeable';
 import { MyState, MySwipeDirection } from '../../../types/types';
@@ -7,10 +7,11 @@ import debounce from '../../../functions/debounce';
 
 interface ModalThumbnailProps {
   state: MyState;
+  refCanSwipe: RefObject<boolean>;
   setPosition: (direction: MySwipeDirection, position: number) => void;
 }
 
-export default function ModalThumbnailFooter({ state, setPosition }: ModalThumbnailProps) {
+export default function ModalThumbnailFooter({ state, refCanSwipe, setPosition }: ModalThumbnailProps) {
   const { children } = useImageGalleryContext();
   const refThumbnailSlider = useRef<HTMLDivElement>(null);
   const offsetX = useRef(0);
@@ -104,6 +105,7 @@ export default function ModalThumbnailFooter({ state, setPosition }: ModalThumbn
   };
 
   const handleClick = (index: number) => {
+    if (!refCanSwipe.current) return;
     if (!isDragging) {
       setPosition('BasedOnIndex', index + 1);
     }

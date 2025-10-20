@@ -20,6 +20,7 @@ export default function ModalImageGallery() {
     imageCount: imageCount,
   });
   const refIndex = useRef(state.pos);
+  const refCanSwipe = useRef(true);
 
   const handleSwipePosition = (direction: MySwipeDirection, position?: number) => {
     dispatch({ direction: direction, pos: position, refIndex });
@@ -43,8 +44,16 @@ export default function ModalImageGallery() {
         onToggleTheme={toggleTheme}
         theme={theme}
       />
-      <Slider refIndex={refIndex} state={state} swipePosition={handleSwipePosition} setPosition={handleSetPosition} />
-      {isThumbnailNavigation && <ThumbnailNavigation setPosition={handleSetPosition} state={state} />}
+      <Slider
+        refCanSwipe={refCanSwipe}
+        refIndex={refIndex}
+        state={state}
+        swipePosition={handleSwipePosition}
+        setPosition={handleSetPosition}
+      />
+      {isThumbnailNavigation && (
+        <ThumbnailNavigation refCanSwipe={refCanSwipe} setPosition={handleSetPosition} state={state} />
+      )}
     </div>
   );
 }

@@ -19,6 +19,7 @@ export default function useImageGalleryContext() {
     sliderThumbnail: context.sliderThumbnail || false,
     sliderIndex: context.sliderIndex,
     sliderTheme: context.sliderTheme,
+    sliderAnimationDuration: context.sliderAnimationDuration,
     onClose: context.onClose,
   };
 }

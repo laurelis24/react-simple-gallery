@@ -20,6 +20,7 @@ export interface ImageGalleryProps {
   sliderTheme?: boolean;
   layout?: GalleryLayout;
   galleryImageAnimation?: boolean;
+  sliderAnimationDuration: number;
   className?: string;
 }
 
@@ -40,6 +41,7 @@ export default function ImageGallery({
   sliderThumbnail = true,
   sliderIndex = true,
   sliderTheme = true,
+  sliderAnimationDuration = 300,
   layout = 'masonry',
   galleryImageAnimation = true,
   className = '',
@@ -135,6 +137,7 @@ export default function ImageGallery({
         sliderTheme: sliderTheme,
         layout: layout,
         galleryImageAnimation: galleryImageAnimation,
+        sliderAnimationDuration: sliderAnimationDuration,
         onClose: closeModal,
       }}
     >

@@ -114,7 +114,9 @@ body.scroll-lock {
   align-items: center;
 }
 .fullscreen-wrapper .nav-container .right-container button {
-  transition: color 0.2s, stroke-width 0.2s;
+  transition:
+    color 0.2s,
+    stroke-width 0.2s;
   cursor: pointer;
   border: none;
   background: transparent;
@@ -363,7 +365,7 @@ body.scroll-lock {
   background-color: var(--uib-color);
   width: 20%;
   height: 20%;
-  content: "";
+  content: '';
 }
 .spinner-container .spinner-dot:nth-child(1)::before {
   transform: translateX(var(--uib-center));
