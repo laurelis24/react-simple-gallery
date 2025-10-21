@@ -230,6 +230,18 @@ body.scroll-lock {
 .fullscreen-wrapper .hide-btn {
   display: none;
 }
+.fullscreen-wrapper .title-and-description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fade 1.2s forwards;
+  padding: 10px;
+  text-align: center;
+}
+.fullscreen-wrapper .title-and-description h4,
+.fullscreen-wrapper .title-and-description small {
+  width: 70%;
+}
 .fullscreen-wrapper .thumbnail-footer-container {
   animation: fade 0.5s forwards;
   height: calc(60px + 1vw);

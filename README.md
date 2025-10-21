@@ -9,7 +9,6 @@
 ## Features
 
 - Simple using minimal amount of dependencies
-- Slides from thumbnail
 - Keyboard navigation
 - Swipe support
 - Infinite swipe
@@ -24,8 +23,23 @@ npm install -D @laurelis/react-simple-gallery
 
 ## Usage
 
+- Basic example
+
+```tsx
+import ImageGallery, { Image } from '@laurelis/react-simple-gallery';
+
+function ImageGallery() {
+  return (
+    <ImageGallery /*props here*/>
+      <Image src={'image1.jpg'} title={'Image title'} description={'Lorem ipsum'} />;
+      <Image src={'image2.jpg'} title={'Image title without description'} />;
+      <Image src={'image3.jpg'} />;
+    </ImageGallery>
+  );
+}
+```
+
 - Example using a free public API (cat images) to demonstrate a dynamic gallery with images of different sizes.
-- Copy/paste usage example
 
 ```tsx
 import ImageGallery, { Image } from '@laurelis/react-simple-gallery';
@@ -48,7 +62,7 @@ function App() {
   return (
     <main>
       {(images && (
-        <ImageGallery swipeable={true}>
+        <ImageGallery sliderAnimationDuration={350}>
           {images.map((image) => {
             return <Image key={image.id} src={image.url} />;
           })}
@@ -63,21 +77,28 @@ function Loader() {
 }
 ```
 
-| Prop                      | Type      | Default    | Description                                                                            |
-| ------------------------- | --------- | ---------- | -------------------------------------------------------------------------------------- |
-| `keyboard`                | `boolean` | `true`     | Enable keyboard navigation (LEFT, RIGHT, ESC)                                          |
-| `arrowButtons`            | `boolean` | `true`     | Show or hide arrow key buttons                                                         |
-| `swipeable`               | `boolean` | `true`     | Enable swipe on/off (mobile and pc)                                                    |
-| `fullScreenButton`        | `boolean` | `true`     | Show or hide full screen button                                                        |
-| `sliderThumbnail`         | `boolean` | `true`     | Show or hide sliders image thumbnail navigation button                                 |
-| `sliderIndex`             | `boolean` | `true`     | Show or hide sliders image index/position                                              |
-| `sliderTheme`             | `boolean` | `true`     | Show or hide sliders light/dark mode button                                            |
-| `showImageCount`          | `number`  | `Infinity` | Specifies the number of images initially displayed in the gallery (min-1)              |
-| `sliderAnimationDuration` | `number`  | `300`      | Slider animation duration                                                              |
-| `layout`                  | `string`  | `masonry`  | Gallery layout type - "masonry" and "flex"                                             |
-| `lazyLoading`             | `boolean` | `true`     | Enable lazy loading of whole gallery (HTML lazy loading)                               |
-| `galleryImageAnimation`   | `boolean` | `true`     | Enables or disables image animation when clicking the gallery (may impact performance) |
-| `className`               | `string`  | —          | Optional CSS class for custom styling                                                  |
+- ImageGallery props
+  | Prop | Type | Default | Description |
+  | ------------------------- | --------- | ---------- | -------------------------------------------------------------------------------------- |
+  | `keyboard` | `boolean` | `true` | Enable keyboard navigation (LEFT, RIGHT, ESC) |
+  | `arrowButtons` | `boolean` | `true` | Show or hide arrow key buttons |
+  | `swipeable` | `boolean` | `true` | Enable swipe on/off (mobile and pc) |
+  | `fullScreenButton` | `boolean` | `true` | Show or hide full screen button |
+  | `sliderThumbnail` | `boolean` | `true` | Show or hide sliders image thumbnail navigation button |
+  | `sliderIndex` | `boolean` | `true` | Show or hide sliders image index/position |
+  | `sliderTheme` | `boolean` | `true` | Show or hide sliders light/dark mode button |
+  | `showImageCount` | `number` | `Infinity` | Specifies the number of images initially displayed in the gallery (min-1) |
+  | `sliderAnimationDuration` | `number` | `300` | Slider animation duration |
+  | `layout` | `string` | `masonry` | Gallery layout type - "masonry" and "flex" |
+  | `lazyLoading` | `boolean` | `true` | Enable lazy loading of whole gallery (HTML lazy loading) |
+  | `galleryImageAnimation` | `boolean` | `true` | Enables or disables image animation when clicking the gallery (may impact performance) |
+  | `className` | `string` | — | Optional CSS class for custom styling |
+
+- Image props
+  | Prop | Type | Default | Description |
+  | ------------- | -------- | ------- | --------------------------- |
+  | `title` | `string` | `""` | Image title in slider |
+  | `description` | `string` | `""` | Image description in slider |
 
 ## Performance
 

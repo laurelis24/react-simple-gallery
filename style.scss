@@ -251,6 +251,21 @@ body.scroll-lock {
     display: none;
   }
 
+  // Title and description
+  .title-and-description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fade 1.2s forwards;
+    padding: 10px;
+    text-align: center;
+
+    h4,
+    small {
+      width: 70%;
+    }
+  }
+
   // Modal footer
   .thumbnail-footer-container {
     animation: fade 0.5s forwards;

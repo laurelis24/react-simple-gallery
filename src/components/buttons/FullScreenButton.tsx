@@ -1,5 +1,3 @@
-import { memo, RefObject, useCallback, useEffect, useState } from 'react';
-import styles from '../../style.module.css';
 import useFullscreen from '../../hooks/useFullscreen';
 
 interface FullScreenButtonProps {

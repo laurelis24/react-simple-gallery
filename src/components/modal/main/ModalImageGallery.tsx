@@ -7,9 +7,10 @@ import useImageGalleryContext from '../../../hooks/useImageGalleryContext';
 import ModalNavbar from '../nav/ModalNavbar';
 import { MySwipeDirection } from '../../../types/types';
 import useTheme from '../../../hooks/useTheme';
+import TitleAndDescription from './TitleAndDescription';
 
 export default function ModalImageGallery() {
-  const { imageCount, imageIndex, sliderTheme, refSlide } = useImageGalleryContext();
+  const { children, imageCount, imageIndex, sliderTheme, refSlide } = useImageGalleryContext();
   const [theme, toggleTheme] = useTheme();
   const [isThumbnailNavigation, setIsThumbnailNavigation] = useState(true);
   const refSlider = useRef<HTMLDivElement>(null);
@@ -30,6 +31,9 @@ export default function ModalImageGallery() {
     refSlide.current?.classList.add(styles['no-transition']);
     dispatch({ direction: direction, pos: position, refIndex });
   };
+
+  const position = state.pos <= 0 ? imageCount : state.pos > 15 ? 1 : state.pos;
+  const [title, description] = [children[position - 1].props.title, children[position - 1].props.description];
 
   return (
     <div
@@ -52,7 +56,12 @@ export default function ModalImageGallery() {
         setPosition={handleSetPosition}
       />
       {isThumbnailNavigation && (
-        <ThumbnailNavigation refCanSwipe={refCanSwipe} setPosition={handleSetPosition} state={state} />
+        <>
+          {(title || description) && (
+            <TitleAndDescription position={position} title={title || ''} description={description || ''} />
+          )}
+          <ThumbnailNavigation refCanSwipe={refCanSwipe} setPosition={handleSetPosition} state={state} />
+        </>
       )}
     </div>
   );
