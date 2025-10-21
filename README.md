@@ -28,7 +28,7 @@ npm install -D @laurelis/react-simple-gallery
 ```tsx
 import ImageGallery, { Image } from '@laurelis/react-simple-gallery';
 
-function ImageGallery() {
+function App() {
   return (
     <ImageGallery /*props here*/>
       <Image src={'image1.jpg'} title={'Image title'} description={'Lorem ipsum'} />;
