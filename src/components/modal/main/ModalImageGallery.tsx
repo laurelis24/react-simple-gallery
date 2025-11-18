@@ -32,7 +32,7 @@ export default function ModalImageGallery() {
     dispatch({ direction: direction, pos: position, refIndex });
   };
 
-  const position = state.pos <= 0 ? imageCount : state.pos > 15 ? 1 : state.pos;
+  const position = state.pos <= 0 ? imageCount : state.pos > imageCount ? 1 : state.pos;
   const [title, description] = [children[position - 1].props.title, children[position - 1].props.description];
 
   return (

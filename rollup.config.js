@@ -47,7 +47,7 @@ export default [
             return `rsg_${name.replace('-', '_')}_${hash}`;
           },
         },
-        extract: false, // index.css
+        extract: 'style.css', // index.css
       }),
     ],
   },

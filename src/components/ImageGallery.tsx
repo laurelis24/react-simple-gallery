@@ -20,7 +20,7 @@ export interface ImageGalleryProps {
   sliderTheme?: boolean;
   layout?: GalleryLayout;
   galleryImageAnimation?: boolean;
-  sliderAnimationDuration: number;
+  sliderAnimationDuration?: number;
   className?: string;
 }
 
