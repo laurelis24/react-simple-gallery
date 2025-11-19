@@ -141,10 +141,7 @@ export default function ImageGallery({
         onClose: closeModal,
       }}
     >
-      <div
-        ref={refGallery}
-        className={`${styles.gallery} ${layout === 'flex' ? styles.flex : styles.masonry} ${className ? className : ''}`.trim()}
-      >
+      <div ref={refGallery} className={`${styles.gallery} ${styles[layout]} ${className ? className : ''}`.trim()}>
         {Children.map(children.slice(0, showImageCount), (child, index) =>
           isValidElement<ImageProps>(child)
             ? cloneElement(child, {

@@ -15,10 +15,8 @@
 
 ## Installation
 
-- react-swipeable is now a peer dependency (You have to install react-swipeable)
-
 ```bash
-npm install -D @laurelis/react-simple-gallery
+npm install @laurelis/react-simple-gallery
 ```
 
 ## Usage
@@ -27,13 +25,14 @@ npm install -D @laurelis/react-simple-gallery
 
 ```tsx
 import ImageGallery, { Image } from '@laurelis/react-simple-gallery';
+import "@laurelis/react-simple-gallery/dist/style.css";
 
 function App() {
   return (
     <ImageGallery /*props here*/>
-      <Image src={'image1.jpg'} title={'Image title'} description={'Lorem ipsum'} />;
-      <Image src={'image2.jpg'} title={'Image title without description'} />;
-      <Image src={'image3.jpg'} />;
+      <Image src={'image1.jpg'} title={'Image title'} description={'Lorem ipsum'} />
+      <Image src={'image2.jpg'} title={'Image title without description'} />
+      <Image src={'image3.jpg'} />
     </ImageGallery>
   );
 }
@@ -44,6 +43,7 @@ function App() {
 ```tsx
 import ImageGallery, { Image } from '@laurelis/react-simple-gallery';
 import { useEffect, useState } from 'react';
+import "@laurelis/react-simple-gallery/dist/style.css";
 
 function App() {
   const [images, setImages] = useState<{ id: string; url: string }[] | null>(null);
@@ -89,7 +89,7 @@ function Loader() {
   | `sliderTheme` | `boolean` | `true` | Show or hide sliders light/dark mode button |
   | `showImageCount` | `number` | `Infinity` | Specifies the number of images initially displayed in the gallery (min-1) |
   | `sliderAnimationDuration` | `number` | `300` | Slider animation duration |
-  | `layout` | `string` | `masonry` | Gallery layout type - "masonry" and "flex" |
+  | `layout` | `string` | `masonry` | `responsive` | Gallery layout type - "masonry" and "flex" |
   | `lazyLoading` | `boolean` | `true` | Enable lazy loading of whole gallery (HTML lazy loading) |
   | `galleryImageAnimation` | `boolean` | `true` | Enables or disables image animation when clicking the gallery (may impact performance) |
   | `className` | `string` | — | Optional CSS class for custom styling |

@@ -2,7 +2,7 @@ import { RefObject } from 'react';
 import { SwipeDirections } from 'react-swipeable';
 
 export type Theme = 'dark' | 'light';
-export type GalleryLayout = 'flex' | 'masonry';
+export type GalleryLayout = 'flex' | 'masonry' | 'responsive';
 export type MySwipeDirection = SwipeDirections | 'BasedOnIndex';
 
 export interface Rectangle {

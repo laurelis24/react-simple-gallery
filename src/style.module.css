@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 * {
   box-sizing: border-box;
 }
@@ -7,7 +8,6 @@ body.scroll-lock {
 }
 
 .gallery {
-  gap: 5px;
   animation: showup 0.5s linear 0s forwards;
   margin: 0 auto;
   box-shadow: 0 0 1px rgba(202, 200, 200, 0.5);
@@ -35,6 +35,7 @@ body.scroll-lock {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 5px;
 }
 .gallery.flex .item {
   position: relative;
@@ -50,16 +51,33 @@ body.scroll-lock {
 }
 
 .gallery.masonry {
-  column-count: 4;
+  column-gap: 5px;
+  column-count: 6;
 }
 .gallery.masonry .item {
-  display: inline-block;
+  margin-bottom: 5px;
   width: 100%;
-  text-align: center;
 }
 .gallery.masonry .item img {
+  display: block;
   width: 100%;
   height: auto;
+  object-fit: cover;
+}
+
+.gallery.responsive {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-auto-rows: 250px 150px;
+  grid-auto-flow: dense;
+}
+
+.gallery .item {
+  width: 100%;
+  height: 100%;
+}
+.gallery .item img {
   object-fit: cover;
 }
 
@@ -236,6 +254,7 @@ body.scroll-lock {
   align-items: center;
   animation: fade 1.2s forwards;
   padding: 10px;
+  font-family: 'Montserrat', sans-serif;
   text-align: center;
 }
 .fullscreen-wrapper .title-and-description h4,
@@ -341,6 +360,14 @@ body.scroll-lock {
   .gallery.flex .item {
     flex: 1 1 calc(50% - 5px);
     max-width: calc(50% - 5px);
+  }
+}
+@media (min-width: 480px) {
+  .gallery.responsive .item:first-child {
+    grid-area: 1/1 / span 2 / span 2;
+  }
+  .gallery.responsive .item:nth-child(3n) {
+    grid-column: span 2;
   }
 }
 .spinner-container {
