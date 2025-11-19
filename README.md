@@ -25,7 +25,7 @@ npm install @laurelis/react-simple-gallery
 
 ```tsx
 import ImageGallery, { Image } from '@laurelis/react-simple-gallery';
-import "@laurelis/react-simple-gallery/dist/style.css";
+import '@laurelis/react-simple-gallery/dist/style.css';
 
 function App() {
   return (
@@ -43,7 +43,7 @@ function App() {
 ```tsx
 import ImageGallery, { Image } from '@laurelis/react-simple-gallery';
 import { useEffect, useState } from 'react';
-import "@laurelis/react-simple-gallery/dist/style.css";
+import '@laurelis/react-simple-gallery/dist/style.css';
 
 function App() {
   const [images, setImages] = useState<{ id: string; url: string }[] | null>(null);
@@ -75,6 +75,19 @@ function App() {
 function Loader() {
   return <h1>Loading gallery...</h1>;
 }
+```
+
+- Example how to apply custom style to gallery or image. (Slider is not customizable yet)
+
+```tsx
+// for tailwind css use !important to override css file.
+// for custom css use inline style to override css file.
+// there's also an option to change original css file.
+<ImageGallery className="border-2!" /* tailwind */>
+  <Image style={{ border: 'solid 2px black' }} /* custom style */ />
+  <Image className="border-2!" />
+  <Image />
+</ImageGallery>
 ```
 
 - ImageGallery props

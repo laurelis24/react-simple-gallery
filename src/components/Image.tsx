@@ -4,7 +4,6 @@ export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   src: string;
   title?: string;
   description?: string;
-  className?: string;
 }
 
 export default function Image({ ...rest }: ImageProps) {

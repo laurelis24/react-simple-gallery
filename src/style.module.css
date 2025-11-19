@@ -67,17 +67,16 @@ body.scroll-lock {
 
 .gallery.responsive {
   display: grid;
-  grid-gap: 10px;
+  grid-gap: 5px;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   grid-auto-rows: 250px 150px;
   grid-auto-flow: dense;
 }
-
-.gallery .item {
+.gallery.responsive .item {
   width: 100%;
   height: 100%;
 }
-.gallery .item img {
+.gallery.responsive .item img {
   object-fit: cover;
 }
 

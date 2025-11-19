@@ -1,4 +1,14 @@
-import { Children, cloneElement, isValidElement, ReactElement, useEffect, useRef, useState } from 'react';
+import {
+  Children,
+  cloneElement,
+  CSSProperties,
+  HTMLAttributes,
+  isValidElement,
+  ReactElement,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { ImageProps } from './Image';
 import AnimatedImageClone from './modal/main/AnimatedImageClone';
 import { GalleryLayout, Rectangle } from '../types/types';
@@ -22,6 +32,7 @@ export interface ImageGalleryProps {
   galleryImageAnimation?: boolean;
   sliderAnimationDuration?: number;
   className?: string;
+  style?: CSSProperties;
 }
 
 interface AnimatedImage {
@@ -45,6 +56,7 @@ export default function ImageGallery({
   layout = 'masonry',
   galleryImageAnimation = true,
   className = '',
+  style = undefined,
 }: ImageGalleryProps) {
   const [imageIndex, setImageIndex] = useState<number | null>(null);
   const refGallery = useRef<HTMLDivElement>(null);
@@ -141,7 +153,11 @@ export default function ImageGallery({
         onClose: closeModal,
       }}
     >
-      <div ref={refGallery} className={`${styles.gallery} ${styles[layout]} ${className ? className : ''}`.trim()}>
+      <div
+        ref={refGallery}
+        style={style}
+        className={`${styles.gallery} ${styles[layout]} ${className ? className : ''}`.trim()}
+      >
         {Children.map(children.slice(0, showImageCount), (child, index) =>
           isValidElement<ImageProps>(child)
             ? cloneElement(child, {
